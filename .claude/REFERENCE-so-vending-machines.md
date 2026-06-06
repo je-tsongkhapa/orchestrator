@@ -1,6 +1,6 @@
 # REFERENCE — AI Vending Machines (Superorganism)
 
-Superorganism's slice of the vending standard (demand-side sibling to `REFERENCE-so-business-systems.md`). A *destination* you bring a cheap on-hand input to and leave with **one finished deliverable**. Superorganism's domain is the **inward, self-facing half** — your own records, property, estate, homestead (the inward end of the People fault line).
+Superorganism's slice of the vending standard (demand-side sibling to `REFERENCE-so-business-systems.md`). A *destination* you bring a cheap on-hand input to and leave with **one finished deliverable**. Superorganism's domain is the **inward, self-facing half** — your own property, estate, homestead (the inward end of the People fault line).
 
 ## The standard — 8 traits
 
@@ -14,9 +14,9 @@ Superorganism's slice of the vending standard (demand-side sibling to `REFERENCE
 - **Moat:** a symptom→cause differential diagnostic key + a crop-specific IPM action-sequence library
 - **vs:** Crop consultants/agronomists do per-visit scouting; consumer plant-ID apps name the plant or give a one-line guess with no differential or action plan. Extension offices are slow and queue- [...]
 
-## Shared — the dual-use bridge (also ServiceGrid's)
+## Shared — the dual-use property & equipment bridge (also ServiceGrid's)
 
-*Same machines, the owner/homeowner side — exactly where the two orgs meet (a roofer & a homeowner both visit SitePlan; a bookkeeper & you both visit ScanBinder).*
+*Same machines, the owner/homeowner side — where the two orgs meet (a roofer & a homeowner both visit SitePlan).*
 
 **2. SitePlan** — *decode / criteria moat*
 - an address + a few phone photos → a to-scale site plan with parcel boundaries, structures, and setbacks
@@ -36,13 +36,7 @@ Superorganism's slice of the vending standard (demand-side sibling to `REFERENCE
 - **Moat:** parcel-geometry/acreage computation + slope/access/zoning read keyed to located data
 - **vs:** Civil engineers and land planners do feasibility studies bespoke and expensive; listing sites show a map pin and nothing about constraints. No per-parcel destination merges photos + GIS + zoning [...]
 
-**5. ScanBinder** — *classification / closure moat*
-- A folder of unsorted scans/photos of paperwork the buyer already [...] → documents auto-classified and grouped into a logical table of contents, each page OCR'd and renamed, a [...]
-- **Buyer:** Bookkeepers, real-estate agents assembling a home handover, estate executors, and small-office admins facing a shoebox of mixed paper. The alternative is hours of manual sorting/renaming; the binder is the artifact handed to the [...]
-- **Moat:** a document-classification taxonomy + a completeness/coverage check (everything filed, nothing dropped)
-- **vs:** Document-management/scanner apps (Adobe Scan, scanner OCR) digitize and OCR but don't classify, sequence, index, or tell you what's missing — you still do the organizing. Per-job, it was a [...]
-
-**6. PartFinder** — *decode-table moat*
+**5. PartFinder** — *decode-table moat*
 - Photos of the failed/worn part (the part itself, any cast-in [...] → part name and function, the OEM part number(s) and known cross-reference/aftermarket equivalents, the [...]
 - **Buyer:** Field repair techs, facilities/maintenance staff, restaurant and farm operators, and DIYers facing a broken part with no number, who otherwise lose 30-60 minutes per part hunting forums and parts diagrams. Pays per item the way [...]
 - **Moat:** a part-number cross-reference/interchange KB + a visual-form-to-part-family matcher + failure-mode catalog
