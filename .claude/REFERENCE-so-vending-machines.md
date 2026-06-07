@@ -6,7 +6,7 @@ Superorganism's slice of the vending standard, by app archetype — the inward, 
 
 1. **Cheap, on-hand input** · 2. **One bounded outcome** · 3. **No per-unit incumbent for the small buyer** · 4. **Low liability** · 5. **Horizontal** (domain is a parameter) · 6. **Reasoning over messy input is the work** · 7. **High leverage** · 8. **A real moat** — a domain-specific structure (decode-table / criteria-matrix / closure-tie-out), not raw generation.
 
-## Console (4)
+## Console (5)
 
 **LandRead** — a credit + parcel photos -> parcel geometry/acreage + slope/access/drainage/zoning read
 - *moat:* parcel-geometry computation + slope/zoning read keyed to located data · *buyer:* land buyers, small builders, homesteaders evaluating a lot  ·  *LM* 🧑7 / 🤖4
@@ -19,6 +19,9 @@ Superorganism's slice of the vending standard, by app archetype — the inward, 
 
 **PageForge** — a credit + the view/control you need (a pick or a sketch) + your data -> a collectible, working Console page (a resource-view mini-app) that snaps into your dashboard; accrue pages, assemble your console à la carte
 - *moat:* a kernel-conformant page grammar (each page wires into the shared 6-resource Console kernel) + a composition/fit lint · *buyer:* anyone building their own console from parts — operators, quantified-self/SO builders, small teams; collectible-page collectors  ·  *LM* 🧑7 / 🤖3
+
+**RitualKit** — a credit + your vibe + the practices you want -> a downloadable, beauty-forward composable daily-ritual (dinacharya) app
+- *moat:* a dinacharya practice library + a day-composition grammar (rituals into a coherent day) + a vibe/aesthetic system · *buyer:* anyone wanting a beautiful, personal daily ritual without building the app  ·  *LM* 🧑8 / 🤖1
 
 ## Studio (11)
 
