@@ -2,7 +2,7 @@
 
 The pipeline that discovers, scores, and compiles every **individually-campable site in the United States** into a 12-layer land-designation hierarchy, assigns each to its EPA ecoregion (Level III → Level IV), and renders it on the ecoregion explorers. A curated, personally-scored "where can I actually camp" atlas — the data backbone of the **Ecotone** app target.
 
-Lives in `superorganism/dashboard/prototypes/`. As of last build: **5,171 campgrounds across 50 states, 554 fives.**
+Lives in `superorganism/dashboard/prototypes/`. As of last build: **5,223 campgrounds across 50 states, 555 fives.**
 
 ---
 
@@ -27,7 +27,7 @@ data/camping/curated.json ─────┤   (also the residual base: lake/USA
 Supporting scripts:
 - `_build/integrate_staging.mjs` — folds workflow staging output (`staging/nf_final/`, etc.) into the layer files, compiles, auto-nudges ecoregion gaps. **SP/NPS staging re-processing is disabled** (it re-added rows removed during earlier audits — only national-forest staging still flows through).
 - `_build/audit_national.py` — the quality gate. Run from `data/camping/`. Checks schema, type/score/layer vocab, duplicates, state-bbox containment, ecoregion-null accounting, layer↔curated invariants, marquee-unit spot-checks.
-- Verify recipe (headless): `puppeteer-core` (from `servicegrid/sg-studio/node_modules`) + system Chrome on `http://localhost:8899/ecoregion-explorer-us.html`. Serve `prototypes/` with `python3 -m http.server 8899`.
+- `_build/verify_us_explorer.mjs` — headless runtime verify. Loads `ecoregion-explorer-us.html` in real Chrome (`puppeteer-core` from `servicegrid/sg-studio/node_modules` + system Chrome), asserts every spot renders as a marker with zero JS errors, and reports per-layer counts + marquee. Serve `prototypes/` with `python3 -m http.server 8899` first. Run it before every commit - build-green is not enough. (Ignores the browser's automatic `favicon.ico` 404.)
 
 **`curated.json` is both output AND input.** The compiler loads it as the base layer (it holds residual rows — lakes, USACE, scenic-rivers — that exist in no layer file), then appends the layer files and dedupes. Consequence and the single most important gotcha: **editing a row in a layer file does NOT propagate if a stale copy is already in `curated.json`** — same-rank dedup only fills empty fields, so the stale value wins. **To modify existing rows, drop them from `curated.json` first so they re-resolve fresh from the layer file**, then recompile.
 
@@ -102,7 +102,7 @@ The layers are an ownership/designation taxonomy, top-to-bottom by precedence (`
 | 3 | National Forest | ✅ | 2,214 / 42 states | All forests; 8 states have no NF land |
 | 4 | BLM | ✅ | 473 | 12 Western states; dispersed-dominant (209 dispersed) |
 | 5 | Tribal | ✅ | 39 | 16 states; consent-filtered curated set |
-| 6 | NWR | 🟡 | 1 / GA | Okefenokee only |
+| 6 | NWR | ✅ | 53 / 22 states | Default-DENY sweep; campable refuges are rare boat-in/island needles |
 | 7 | WMA | 🟡 | 13 / GA, AL | |
 | 8 | State Forest | 🟡 | 3 / GA, AL | |
 | 9 | Land Trust | 🟡 | 3 / GA, AL | |
@@ -158,6 +158,17 @@ Currently only co-managed wildernesses bleed into the NF layer (Kanab Creek, Yuk
 
 Lenses still apply where they fit (Havasupai = a marquee 10-mi hike-in), but cultural/scenic iconicity is the real selector. **Build after BLM finishes.**
 
+### Layer 6 — NWR ✅ (53 rows, 22 states — verified)
+**The first regional layer taken national, and the cleanest application of the Default-DENY sweep.** The US Fish & Wildlife mandate is wildlife, not recreation, so ~90% of the ~570 refuges are strictly day-use - the *inverse* of the state-park layer (assume EXCLUDE; include only on an authoritative FWS statement). The campable universe is a small, scattered ~53.
+
+- **Shape: ~7 regional sweep agents covering all 50 states, NOT a 48-state fan-out.** For a small default-DENY layer the per-state fan-out is overkill (most states return 0-1); regional sweeps (AK+HI / Desert SW+CA / Pacific NW+N Rockies / Great Plains / Midwest / South / Northeast), each enumerating only the refuges with verified camping, is faster and **verify-inline** (no salvage, no unverified tail). ~6-8 agents is the right granularity for a default-DENY layer of this size.
+- **The manager-verification trap - "near a refuge is not on a refuge."** Most apparent refuge camping is actually adjacent BLM / NPS / state / Corps land. Verified excludes: Lake Umbagog (NH State Parks), the Colorado River shoreline at Imperial/Havasu (BLM), Salt Plains "campground" (Great Salt Plains State Park), Kirwin & Flint Hills (Army Corps), Chincoteague (NPS Assateague), Seedskadee & Browns-Park-dispersed (BLM). Only camping the **refuge itself** authorizes on refuge land counts.
+- **The secondary-source trap.** Wikipedia/blogs routinely claim camping the official FWS regulation PDFs *prohibit* (Cache River, Big Lake, Noxubee). Every include rests on an fws.gov / recreation.gov statement; default-deny when the regs are silent.
+- **Co-management absorption (the hierarchy at work).** A refuge campground co-located with a higher-layer unit resolves UP: James Kipp Recreation Area - a CMR-NWR-boundary campground the BLM actually runs - merged into the BLM / Upper Missouri River Breaks NM row at identical coords. Correct, not a bug. `audit_national.py`'s NP+NWR invariant is now **absorption-aware**: an NWR-file row missing from the curated NWR layer is OK iff it relocated to a higher layer at matching coords; a true vanish still FAILs.
+- **The needles are boat-lens gold.** The campable refuges skew boat-in / paddle / sandbar / island - exactly the owner's lens: Cape Romain Bulls Island (SC), Upper Mississippi River sandbars (4 districts, MN/WI/IA/IL), Roanoke River paddle platforms (NC), Dale Bumpers White River sandbars (AR), CMR Missouri Breaks floats (MT), Kenai Swan Lake canoe routes (AK, a 5), Maine Coastal Islands / Halifax (ME).
+- **Distribution:** AK 13 (Kenai/Tetlin road camps + river floats), the Colorado/Missouri/Mississippi/White river corridors, a few Western dispersed refuges (Kofa, Sheldon, Cabeza Prieta), Wichita Mountains (OK, Doris + Charons Garden). The Northeast is nearly empty (1 row). HI = 0 (all day-use/closed). Score spread: one new 5 (Kenai canoe routes) + Okefenokee's existing 5, the rest 3-4.
+- **Files:** Okefenokee (the original seed) stays in `nps_nwr_blm.json`; the 52 new rows live in a dedicated `layers/nwr.json` (the blm/tribal per-layer-file pattern). Registered `nwr` in the `build_layers` load list + `integrate_staging`. Runtime-verified via the new `_build/verify_us_explorer.mjs` (5,223 markers render, NWR in the legend at 53, zero JS errors).
+
 ### The discovery toolkit — seven reusable approaches
 
 The five completed layers produced a toolkit of distinct discovery methods. Each remaining layer inherits one or two — naming them turns the plan for 6–12 into a mapping exercise, not a fresh design each time.
@@ -170,11 +181,9 @@ The five completed layers produced a toolkit of distinct discovery methods. Each
 6. **Curated-marquee** (the "5s are rare" discipline) — destination-grade only, deliberately not exhaustive.
 7. **Verify-inline vs deferred-verify** (size-dependent QA) — small layers verify as authored; large layers author then run a verify-only pass.
 
-### Layers 6–12 — Regional layers (🟡 GA/AL/SC only) — planned national approach
+### Layers 7–12 — Regional layers (🟡 GA/AL/SC only) — planned national approach
 
-Built during the original three-state pass; each needs national expansion. The planned approach per layer, tagged with the toolkit technique it inherits:
-
-**6 · NWR — *Default-DENY sweep + Recreation.gov spine.*** The US Fish & Wildlife mandate is wildlife, not recreation, so ~90% of the ~570 refuges have **no** camping. Enumerate the refuges, default-deny, keep the needles — and the needles are special: Okefenokee platforms (already in), Kenai (AK), Kofa dispersed (AZ), Charles M. Russell float-camps on the Missouri Breaks (MT). Mode skews primitive/boat-in. Small final count (~40–60). **Verify-inline.** This is the *inverse* of state parks: assume no camping unless the refuge explicitly permits it.
+Built during the original three-state pass; each needs national expansion. **NWR (layer 6) is now complete (see above)** and validated the method: map each layer to a toolkit technique, size the agent fan-out to the layer, execute. The planned approach per remaining layer:
 
 **7 · WMA — *System-per-mode, but the "system" is the STATE, not the unit.*** This is the national forest of the East/South/Midwest and the **largest remaining layer**. Each state's WMA system has its own rule — designated hunt-camps only / dispersed-allowed / day-use-only — so determine the *state policy first*, then enumerate accordingly. The unique gate is **license + season** ("campable" = usable by a solo traveler outside hunt season or with a cheap permit). Needs the fan-out workflow + cap-and-salvage; **deferred-verify**. Highest yield, lowest verifiability.
 
@@ -188,7 +197,9 @@ Built during the original three-state pass; each needs national expansion. The p
 
 **12 · Lake — *Spine-anchor on USACE — the BLM of this layer.*** The Army Corps of Engineers is the **#1 federal camping provider after the Forest Service** (~2,500 reservoir recreation areas), all on Recreation.gov and fully verifiable. Enumerate Corps lakes with campgrounds first, then TVA / Bureau of Reclamation / state lake rec areas; lake stays the bottom catch-all for residual reservoir rows. Highest yield-per-effort and verifiability of anything remaining — **the easy big win**.
 
-**Suggested sequence** (yield × verifiability × effort): **(1)** Lake/USACE — biggest verifiable win, Recreation.gov does the work; **(2)** State Forest — substantial, settles the dual-model question; **(3)** NWR + Land Trust — quick high-filter sweeps, bundle them; **(4)** Scenic River — boat-lens gold, decide the dedup fork first; **(5)** Other Parks — curated judgment pass; **(6)** WMA — its own fan-out campaign, save for last.
+**Execution note:** at the owner's direction we are running the regional layers in **numerical order (6 → 12)**, not the yield-optimized order below. NWR (6) ✅ done; **WMA (7) is next**.
+
+**Suggested sequence** (yield × verifiability × effort, recorded for reference): **(1)** Lake/USACE — biggest verifiable win, Recreation.gov does the work; **(2)** State Forest — substantial, settles the dual-model question; **(3)** Land Trust — quick high-filter sweep; **(4)** Scenic River — boat-lens gold, decide the dedup fork first; **(5)** Other Parks — curated judgment pass; **(6)** WMA — its own fan-out campaign, save for last.
 
 **Separate axis (not in these seven):** the per-spot **modular overlays** — nearby bike trails, paddle/kayak routes, hiking trails, destination restaurants — are enrichment attached to each camp, not designation layers. A distinct track for when the 12-layer hierarchy is filled out.
 
@@ -261,15 +272,15 @@ The journal makes every leg lossless; total spend accumulates but no work repeat
 ## 12. Current standings (last build)
 
 ```
-TOTAL 5,171 campgrounds · 50 states · 554 fives
-score 5:554  4:1669  3:2062  2:886
+TOTAL 5,223 campgrounds · 50 states · 555 fives
+score 5:555  4:1690  3:2091  2:887
 
 national park   491  (39 states)   ✅
 state park     1894  (50 states)   ✅
 national forest 2214 (42 states)   ✅
 blm             473  (12 states)   ✅
 tribal           39  (16 states)   ✅
-nwr               1  (GA)          🟡
+nwr              53  (22 states)   ✅
 wma              13  (GA/AL)       🟡
 state forest      3  (GA/AL)       🟡
 land trust        3  (GA/AL)       🟡
@@ -278,4 +289,4 @@ scenic-river      9  (GA/AL/SC)    🟡
 lake             25  (GA/AL)       🟡
 ```
 
-**Status:** the 5 big public-land layers (National Park, State Park, National Forest, BLM, Tribal) are **complete**. **Next:** national expansion of the regional layers 6–12 — the planned per-layer approach (which toolkit technique each inherits, its unique twist, the two design forks) and the recommended sequence are now documented in §6 (lead with **Lake/USACE**, end with **WMA**) → optional verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery] for the reusable per-layer method.
+**Status:** the 5 big public-land layers + **NWR (layer 6)** are **complete** (NWR national expansion 2026-06-14: 53 rows, 22 states, verify-inline). **Next:** continuing the regional layers in **numerical order** — **WMA (7)** is next (the largest remaining layer; needs the fan-out workflow + cap-and-salvage), then State Forest, Land Trust, Other Parks, Scenic River, Lake. The per-layer approach for each is documented in §6; optional later, a verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery] for the reusable per-layer method.
