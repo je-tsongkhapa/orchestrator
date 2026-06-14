@@ -133,8 +133,18 @@ GA / AL / SC were hand-authored first as the reference standard. The other 47 ra
 **Source ladder:** forestcamping.com (cleanest per-forest tables WITH site counts) → Recreation.gov gateways/facility pages → fs.usda.gov camping-cabins pages → Wikipedia (coords + wilderness acreage).
 **GA built first as the worked template** (developed + 11 AT shelters + named dispersed/wilderness corridors). Result type spread: developed 723, backcountry 434, dispersed 298, primitive 271, **lookout 182**, shelter 117, tent 67, equestrian 56, walk-in 33, boat-in 33.
 
-### Layer 4 — BLM ⬜ (next)
-The biggest national gap. The Bureau of Land Management runs ~245M acres, almost entirely in the West (NV/UT/AZ/NM/CO/WY/MT/OR/ID/CA). BLM camping is **dispersed-dominant** (open desert, MVUM-governed) plus developed campgrounds and iconic destinations (Alabama Hills, Valley of the Gods, San Rafael Swell, Sawtooth front). Apply the **same multi-mode method as national forests** — designated spine + "pin the named dispersed, note the policy" + the East/West (here, all-West) reality. Only co-managed wildernesses currently bleed into the NF layer (Kanab Creek, Yuki, La Madre); standalone BLM is entirely absent.
+### Layer 4 — BLM ⬜ (next — adaptations locked)
+The biggest national gap. The Bureau of Land Management runs ~245M acres, almost entirely in the West. BLM camping is **dispersed-dominant** — even more than national forests. The NF workflow machinery (roster → author → verify, per state, Sonnet, cap-and-salvage) **ports directly**; the conventions adapt as follows:
+
+- **Scope: ~12 Western states, not 42** — NV/UT/CA/ID/OR/WY/AZ/NM/CO/MT (+ AK/WA). The East/West gradient collapses; it's all-West, all-dispersed-dominant. A much smaller run (likely 1–2 session legs).
+- **No clean "unit" like a national forest.** BLM is organized state → district → field office, not named units. Per-state enumeration targets: **developed campgrounds** (Recreation.gov) + the **National Conservation Lands** crown jewels (National Monuments — Grand Staircase, Bears Ears, Vermilion Cliffs; National Conservation Areas — Red Rock, King Range; Wildernesses / WSAs) + the **famous named dispersed areas** + **LTVAs** (BLM-specific Long-Term Visitor Areas — Quartzsite et al., the snowbird dispersed zones).
+- **Source ladder swaps** (forestcamping.com is FS-only): Recreation.gov → blm.gov field-office recreation pages → BLM National Conservation Lands → **Campendium / iOverlander / FreeRoam / The Dyrt** for the named dispersed spots (Alabama Hills, Valley of the Gods, Moab/Fruita BLM) — because BLM does **not** publish dispersed lists; that knowledge lives in the camper community (the "unofficial spots worth including") → Wikipedia (monuments/coords).
+- **Type vocab:** same set **minus `shelter`** (no AT/PCT-style shelter system on BLM); `lookout` rare. Flag **LTVA** as a dispersed flavor in the row.
+- **Lenses lean dark-sky hard** (many BLM monuments are certified International Dark Sky), plus Moab/Fruita MTB and desert-river paddle/boat-in.
+- **Quality: run the verify pass INLINE** (BLM is small enough for 1–2 legs) so it lands verified from the start, not as author-only drafts — and hold dispersed sourcing to well-documented standouts, not every marginal pullout. (Lesson from the NF run: ~57% of the salvaged forest rows are unverified; for small layers, don't defer verify.)
+- **Estimated scale:** ~600–1,000 curated rows.
+
+Currently only co-managed wildernesses bleed into the NF layer (Kanab Creek, Yuki, La Madre); standalone BLM is entirely absent.
 
 ### Layer 5 — Tribal ⬜
 Small and special: a curated, permit-gated handful, not a big enumeration. Havasupai / Havasu Falls, Monument Valley / Navajo, reservation parks. Distinct permit systems per nation.
