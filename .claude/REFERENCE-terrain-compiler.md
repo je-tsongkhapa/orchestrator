@@ -2,7 +2,7 @@
 
 The pipeline that discovers, scores, and compiles every **individually-campable site in the United States** into a 12-layer land-designation hierarchy, assigns each to its EPA ecoregion (Level III → Level IV), and renders it on the ecoregion explorers. A curated, personally-scored "where can I actually camp" atlas — the data backbone of the **Ecotone** app target.
 
-Lives in `superorganism/dashboard/prototypes/`. As of last build: **4,659 campgrounds across 50 states, 515 fives.**
+Lives in `superorganism/dashboard/prototypes/`. As of last build: **5,171 campgrounds across 50 states, 554 fives.**
 
 ---
 
@@ -158,15 +158,39 @@ Currently only co-managed wildernesses bleed into the NF layer (Kanab Creek, Yuk
 
 Lenses still apply where they fit (Havasupai = a marquee 10-mi hike-in), but cultural/scenic iconicity is the real selector. **Build after BLM finishes.**
 
-### Layers 6–12 — Regional layers (🟡 GA/AL/SC only)
-Built during the original three-state pass; need national expansion.
-- **NWR** (1, Okefenokee) — refuge canoe-platform / wilderness camping; mostly permit paddle systems.
-- **WMA** (13) — wildlife management areas; dispersed/primitive, usually a state license/GORP-type pass required to be on the land.
-- **State Forest** (3) — the **state-government analog of national forests**: same dual model (designated campground spine + dispersed where the state permits), with the dispersed share varying hugely by state. Dispersed-heavy: PA (~2.2M ac, free primitive w/ permit), NY (state forests + Forest Preserve lean-tos), MI (~130 rustic state-forest campgrounds + dispersed), MN. Designated-only: most Southern states (GA/AL). NOT "dispersed land" wholesale.
-- **Land Trust** (3) — private conservation land with public camping (Forever Wild, Lula Lake).
-- **Other Parks** (6) — county / municipal / authority parks.
-- **Scenic River** (9) — Wild & Scenic / state scenic river corridors (gravel-bar & outfitter camps).
-- **Lake** (25) — USACE & utility reservoir campgrounds; the residual catch-all that lives in `curated.json`, not a layer file.
+### The discovery toolkit — seven reusable approaches
+
+The five completed layers produced a toolkit of distinct discovery methods. Each remaining layer inherits one or two — naming them turns the plan for 6–12 into a mapping exercise, not a fresh design each time.
+
+1. **Roster-filter** (state parks) — enumerate every unit in an official system, keep the campable ones, one "Best camp" pick each.
+2. **System-per-mode** (national forest) — a unit is a multi-mode camping *system*; enumerate the modes (developed/dispersed/backcountry/shelter/lookout); the East/West gradient sets what dominates.
+3. **Spine-anchor** (BLM) — one dominant provider or institution carries the whole layer (BLM dispersed + LTVAs; later, USACE for lakes).
+4. **Consent-gate** (tribal) — a per-unit policy/welcome filter; include only where camping is genuinely invited.
+5. **Default-DENY sweep** (the no-camping park removals) — assume no camping, hunt the rare needles.
+6. **Curated-marquee** (the "5s are rare" discipline) — destination-grade only, deliberately not exhaustive.
+7. **Verify-inline vs deferred-verify** (size-dependent QA) — small layers verify as authored; large layers author then run a verify-only pass.
+
+### Layers 6–12 — Regional layers (🟡 GA/AL/SC only) — planned national approach
+
+Built during the original three-state pass; each needs national expansion. The planned approach per layer, tagged with the toolkit technique it inherits:
+
+**6 · NWR — *Default-DENY sweep + Recreation.gov spine.*** The US Fish & Wildlife mandate is wildlife, not recreation, so ~90% of the ~570 refuges have **no** camping. Enumerate the refuges, default-deny, keep the needles — and the needles are special: Okefenokee platforms (already in), Kenai (AK), Kofa dispersed (AZ), Charles M. Russell float-camps on the Missouri Breaks (MT). Mode skews primitive/boat-in. Small final count (~40–60). **Verify-inline.** This is the *inverse* of state parks: assume no camping unless the refuge explicitly permits it.
+
+**7 · WMA — *System-per-mode, but the "system" is the STATE, not the unit.*** This is the national forest of the East/South/Midwest and the **largest remaining layer**. Each state's WMA system has its own rule — designated hunt-camps only / dispersed-allowed / day-use-only — so determine the *state policy first*, then enumerate accordingly. The unique gate is **license + season** ("campable" = usable by a solo traveler outside hunt season or with a cheap permit). Needs the fan-out workflow + cap-and-salvage; **deferred-verify**. Highest yield, lowest verifiability.
+
+**8 · State Forest — *Roster-filter OR System-per-mode, chosen per-state by MODEL.*** Two models (the dual model already flagged for this layer): **dispersed-throughout** (PA ~2.2M ac free primitive w/ permit, NY Forest Preserve, WA/OR DNR — treat like a mini-national-forest: note the policy, pin named primitive areas + lean-tos) vs **developed-campground** (most Southern state forests — a plain roster). MI/MN are roster-rich (~130 rustic MI state-forest campgrounds); the **shelter** type returns (Adirondack/Catskill lean-tos). **Determine the model per state before enumerating** — it is NOT "dispersed land" wholesale. Moderate yield, mostly verifiable.
+
+**9 · Land Trust — *Default-DENY sweep, tiny.*** Most trust/preserve land is day-use; the Nature Conservancy generally bans camping. The few campable ones are special-access systems: Maine's AMC huts + Maine Island Trail (boat-in), some Western conservancies, Forever Wild AL tracts, Lula Lake. ~20–40 nationally. **Verify-inline.** The hut/island-trail systems are the marquee.
+
+**10 · Other Parks — *Curated-marquee only — do NOT enumerate every county.*** Pin the destination-grade regional/county systems that rival state parks: Maricopa County desert parks (AZ — genuine 4–5s), East Bay Regional (CA), San Diego County, the big metro districts. Quality-gated, **not** coverage-gated — the "5s are rare" rubric applied at the *system* level. Judgment-heavy; **verify-inline**.
+
+**11 · Scenic River — *System-per-mode where the unit is a RIVER SEGMENT and the mode is boat-in/gravel-bar.*** The owner's boat lens makes this high-value: Buffalo (AR), Current/Jacks Fork (MO), Middle Fork Salmon + Selway (ID, lottery), Green/Yampa (permit), Allagash (ME). Unique gate is **permit/lottery** for the Western multi-day floats. **Design fork:** most famous floats run *through* national forest/BLM, so the hierarchy (scenic-river = rank 11) would absorb them into NF/BLM and erase the river identity — either exempt scenic-river from downward dedup (treat it as a corridor overlay) or pin the bookable put-in/take-out. Lean: pin access points + permit regime, let the corridor be the "why."
+
+**12 · Lake — *Spine-anchor on USACE — the BLM of this layer.*** The Army Corps of Engineers is the **#1 federal camping provider after the Forest Service** (~2,500 reservoir recreation areas), all on Recreation.gov and fully verifiable. Enumerate Corps lakes with campgrounds first, then TVA / Bureau of Reclamation / state lake rec areas; lake stays the bottom catch-all for residual reservoir rows. Highest yield-per-effort and verifiability of anything remaining — **the easy big win**.
+
+**Suggested sequence** (yield × verifiability × effort): **(1)** Lake/USACE — biggest verifiable win, Recreation.gov does the work; **(2)** State Forest — substantial, settles the dual-model question; **(3)** NWR + Land Trust — quick high-filter sweeps, bundle them; **(4)** Scenic River — boat-lens gold, decide the dedup fork first; **(5)** Other Parks — curated judgment pass; **(6)** WMA — its own fan-out campaign, save for last.
+
+**Separate axis (not in these seven):** the per-spot **modular overlays** — nearby bike trails, paddle/kayak routes, hiking trails, destination restaurants — are enrichment attached to each camp, not designation layers. A distinct track for when the 12-layer hierarchy is filled out.
 
 ---
 
@@ -254,4 +278,4 @@ scenic-river      9  (GA/AL/SC)    🟡
 lake             25  (GA/AL)       🟡
 ```
 
-**Status:** the 5 big public-land layers (National Park, State Park, National Forest, BLM, Tribal) are **complete**. **Next:** national expansion of the regional layers 6–12 (WMA, State Forest, NWR, Land Trust, Other Parks, Scenic River, Lake — currently GA/AL/SC) → optional verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery] for the reusable per-layer method.
+**Status:** the 5 big public-land layers (National Park, State Park, National Forest, BLM, Tribal) are **complete**. **Next:** national expansion of the regional layers 6–12 — the planned per-layer approach (which toolkit technique each inherits, its unique twist, the two design forks) and the recommended sequence are now documented in §6 (lead with **Lake/USACE**, end with **WMA**) → optional verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery] for the reusable per-layer method.
