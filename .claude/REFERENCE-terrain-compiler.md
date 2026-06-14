@@ -147,7 +147,16 @@ The biggest national gap. The Bureau of Land Management runs ~245M acres, almost
 Currently only co-managed wildernesses bleed into the NF layer (Kanab Creek, Yuki, La Madre); standalone BLM is entirely absent.
 
 ### Layer 5 — Tribal ⬜
-Small and special: a curated, permit-gated handful, not a big enumeration. Havasupai / Havasu Falls, Monument Valley / Navajo, reservation parks. Distinct permit systems per nation.
+**More different from NF/BLM than they are from each other — almost none of the dispersed playbook ports.** This is a *different artifact*: a curated, permit-gated, consent-filtered shortlist, NOT a fan-out. Key considerations:
+
+- **Sovereignty = ~574 separate jurisdictions, not one agency.** No central enumeration, no Recreation.gov — each nation runs its own permit system, fees, seasons, rules. The "source ladder" is per-nation tribal sites/offices, wildly variable and often offline.
+- **The dispersed model INVERTS** (and that was the core of NF/BLM). Casual/dispersed camping by non-members is generally **prohibited**; you camp only at designated, explicitly-permitted sites, often with a mandatory permit and sometimes a **required tribal guide** (Havasupai lottery permits, Navajo backcountry permits, guide-only Monument Valley / Antelope Canyon zones). The "pin the named dispersed" engine turns OFF.
+- **A cultural-consent filter the federal layers never needed.** List a place ONLY where the nation actively invites visitors to camp; record protocols (permit-required, no-photography, no off-trail, sacred-site / member-only closures, seasonal ceremony closures). The bar is "the tribe welcomes it," not "technically possible."
+- **Curation, not enumeration → the workflow shape changes.** The universe of visitor-campable tribal land is a small discrete set (~few dozen: Havasupai, Monument Valley's The View, Antelope Point on Lake Powell, tribal parks, pueblo campgrounds, White Mountain / San Carlos Apache lands). Build it as a **single curated research pass with deep per-tribe permit verification**, NOT a per-state roster→author→verify fan-out.
+- **Two scoping traps:** (1) **co-management dedup** — Canyon de Chelly is an **NPS** monument, Bears Ears is **BLM/FS**; the tribal layer is for tribally-OWNED-and-run camping, don't double-list federal units; (2) **Alaska Native corporation (ANCSA) lands** are a separate category (corporations, not reservations) — make a deliberate in/out scope call.
+- **Volatility:** permit systems/fees/access change often and aren't centrally tracked — entries need "verify current status" and go stale faster than federal layers.
+
+Lenses still apply where they fit (Havasupai = a marquee 10-mi hike-in), but cultural/scenic iconicity is the real selector. **Build after BLM finishes.**
 
 ### Layers 6–12 — Regional layers (🟡 GA/AL/SC only)
 Built during the original three-state pass; need national expansion.
