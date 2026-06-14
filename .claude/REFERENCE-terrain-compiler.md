@@ -100,8 +100,8 @@ The layers are an ownership/designation taxonomy, top-to-bottom by precedence (`
 | 1 | National Park | ✅ | 491 / 39 states | Every campable NPS unit, per-campground |
 | 2 | State Park | ✅ | 1,894 / 50 states | All 50 state-park systems |
 | 3 | National Forest | ✅ | 2,214 / 42 states | All forests; 8 states have no NF land |
-| 4 | BLM | ⬜ | 0 | The big Western gap — next priority |
-| 5 | Tribal | ⬜ | 0 | Small, permit-gated, curated |
+| 4 | BLM | ✅ | 473 | 12 Western states; dispersed-dominant (209 dispersed) |
+| 5 | Tribal | ✅ | 39 | 16 states; consent-filtered curated set |
 | 6 | NWR | 🟡 | 1 / GA | Okefenokee only |
 | 7 | WMA | 🟡 | 13 / GA, AL | |
 | 8 | State Forest | 🟡 | 3 / GA, AL | |
@@ -133,7 +133,7 @@ GA / AL / SC were hand-authored first as the reference standard. The other 47 ra
 **Source ladder:** forestcamping.com (cleanest per-forest tables WITH site counts) → Recreation.gov gateways/facility pages → fs.usda.gov camping-cabins pages → Wikipedia (coords + wilderness acreage).
 **GA built first as the worked template** (developed + 11 AT shelters + named dispersed/wilderness corridors). Result type spread: developed 723, backcountry 434, dispersed 298, primitive 271, **lookout 182**, shelter 117, tent 67, equestrian 56, walk-in 33, boat-in 33.
 
-### Layer 4 — BLM ⬜ (next — adaptations locked)
+### Layer 4 — BLM ✅ (473 rows, 12 states — verified)
 The biggest national gap. The Bureau of Land Management runs ~245M acres, almost entirely in the West. BLM camping is **dispersed-dominant** — even more than national forests. The NF workflow machinery (roster → author → verify, per state, Sonnet, cap-and-salvage) **ports directly**; the conventions adapt as follows:
 
 - **Scope: ~12 Western states, not 42** — NV/UT/CA/ID/OR/WY/AZ/NM/CO/MT (+ AK/WA). The East/West gradient collapses; it's all-West, all-dispersed-dominant. A much smaller run (likely 1–2 session legs).
@@ -146,7 +146,7 @@ The biggest national gap. The Bureau of Land Management runs ~245M acres, almost
 
 Currently only co-managed wildernesses bleed into the NF layer (Kanab Creek, Yuki, La Madre); standalone BLM is entirely absent.
 
-### Layer 5 — Tribal ⬜
+### Layer 5 — Tribal ✅ (39 rows, 16 states — verified)
 **More different from NF/BLM than they are from each other — almost none of the dispersed playbook ports.** This is a *different artifact*: a curated, permit-gated, consent-filtered shortlist, NOT a fan-out. Key considerations:
 
 - **Sovereignty = ~574 separate jurisdictions, not one agency.** No central enumeration, no Recreation.gov — each nation runs its own permit system, fees, seasons, rules. The "source ladder" is per-nation tribal sites/offices, wildly variable and often offline.
@@ -237,14 +237,14 @@ The journal makes every leg lossless; total spend accumulates but no work repeat
 ## 12. Current standings (last build)
 
 ```
-TOTAL 4,659 campgrounds · 50 states · 515 fives
-score 5:515  4:1500  3:1789  2:855
+TOTAL 5,171 campgrounds · 50 states · 554 fives
+score 5:554  4:1669  3:2062  2:886
 
 national park   491  (39 states)   ✅
 state park     1894  (50 states)   ✅
 national forest 2214 (42 states)   ✅
-blm               0                ⬜  next
-tribal            0                ⬜
+blm             473  (12 states)   ✅
+tribal           39  (16 states)   ✅
 nwr               1  (GA)          🟡
 wma              13  (GA/AL)       🟡
 state forest      3  (GA/AL)       🟡
@@ -254,4 +254,4 @@ scenic-river      9  (GA/AL/SC)    🟡
 lake             25  (GA/AL)       🟡
 ```
 
-**Next:** BLM (large, dispersed-dominant West) → Tribal (small curated) → national expansion of layers 6–12 → optional verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery] for the reusable per-layer method.
+**Status:** the 5 big public-land layers (National Park, State Park, National Forest, BLM, Tribal) are **complete**. **Next:** national expansion of the regional layers 6–12 (WMA, State Forest, NWR, Land Trust, Other Parks, Scenic River, Lake — currently GA/AL/SC) → optional verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery] for the reusable per-layer method.
