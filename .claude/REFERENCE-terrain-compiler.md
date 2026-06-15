@@ -91,6 +91,41 @@ This rule is why "Chickamauga Battlefield" (group-only) was removed, why GA's Sm
 
 ---
 
+## 5a. Curation doctrine — note comprehensively, pin selectively
+
+The score **is** the curation, applied continuously — a `2` already means "ordinary but campable." What changes down the layer stack is not the method but the **publication floor**, and it tracks one thing:
+
+> **The pin-bar rises as the designation's guarantee-of-quality falls.**
+
+Layers 1–5 are protected *for their beauty* (a national park, a wild-and-scenic river, a tribal park), so passing the campability gate ≈ already a 3+; the designation pre-curated. Layers 7, 10, 12 are protected *for a use* (WMA = hunting, Lake = water management) or *not at all* (a county park can be a gem or a ballfield) — the designation guarantees nothing, so each **site must earn its pin**.
+
+**The operating rule — "note comprehensively, pin selectively"** (generalizing the national-forest layer's *"pin the named dispersed, note the rest"* to every marginal layer):
+- **Enumerate / note comprehensively** (cheap): roster every unit + its camping policy. This is the coverage and the discovery — nothing is lost.
+- **Fully author + pin selectively** (expensive): write a full scored row only for sites clearing the floor. The marginal tail is *noted* (it exists, here's the policy + count), never pinned. Promotion later is free — a noted unit just needs a row written.
+
+**Pruning is a threshold, not a project.** The explorer applies a **score floor** (default view = score ≥ 3, with a `min ★` 2+/3+/4+ toggle in the legend), so:
+- low-value pins are hidden by a filter, never a delete — reversible, instant, zero row-by-row review;
+- it back-applies to the thousands of rows already on the map (and to the 1,259 author-only NF rows) — the floor curates them all at once;
+- "comprehensive then prune" finally costs nothing, because the prune is `WHERE score >= floor`. (Implemented in `ecoregion-explorer-us.html`: at default ≥3, 4,336 of 5,223 pins show, the 887 score-2s hide.)
+
+**Per-layer publication floors** (the codified method):
+
+| Layer | Designation guarantees… | Floor | Behavior |
+|---|---|---|---|
+| 1–5 (NP, SP, NF, BLM, Tribal) | beauty (protected land) | 2 | enumerate-and-keep; designation pre-curates |
+| 8 State Forest | real forest land | 2 | enumerate-and-keep, like 1–5 |
+| 11 Scenic River | beauty, by law | 2 | enumerate-and-keep; boat-lens gold |
+| 9 Land Trust | nothing, but tiny + default-DENY | n/a | self-curates (so few are campable) |
+| 12 Lake | water management, not scenery | 3 | USACE spine comprehensive; floor hides the mud-flats |
+| 7 WMA | a *use* (hunting) | 3 | note all, pin the lake/river-access + real primitive camps |
+| 10 Other Parks | nothing at all | 4 | marquee-only by construction |
+
+**The one discipline it demands:** scores must stay **honest** — never inflate a 2 into a 3 to keep it visible. The floor is only as trustworthy as the calibration; for floored layers, a verify pass that *drops dishonest 3s back to the tail* is the safeguard (WMA's verify stage does exactly this).
+
+**Why it works (the trilemma it breaks):** Completeness × Trust × Effort normally trade off — comprehensive-and-keep buys completeness at the cost of trust (mediocre pins) and deferred effort (a prune project that never happens). Enumerate-comprehensively / publish-by-floor gets all three at once — completeness in the data, trust in the default view, bounded effort (the floor is a filter) — and the price is just honest scoring plus a one-time bit of map infra.
+
+---
+
 ## 6. The 12-layer designation hierarchy
 
 The layers are an ownership/designation taxonomy, top-to-bottom by precedence (`HIER` in `build_layers.mjs`). On a geographic overlap the **higher layer wins** the merged row. Markers below: ✅ national · 🟡 partial · ⬜ empty.
