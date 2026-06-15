@@ -2,7 +2,7 @@
 
 The pipeline that discovers, scores, and compiles every **individually-campable site in the United States** into a 12-layer land-designation hierarchy, assigns each to its EPA ecoregion (Level III → Level IV), and renders it on the ecoregion explorers. A curated, personally-scored "where can I actually camp" atlas — the data backbone of the **Ecotone** app target.
 
-Lives in `superorganism/dashboard/prototypes/`. As of last build: **5,402 campgrounds across 50 states, 562 fives.**
+Lives in `superorganism/dashboard/prototypes/`. As of last build: **5,866 campgrounds across 50 states, 587 fives.**
 
 ---
 
@@ -139,7 +139,7 @@ The layers are an ownership/designation taxonomy, top-to-bottom by precedence (`
 | 5 | Tribal | ✅ | 39 | 16 states; consent-filtered curated set |
 | 6 | NWR | ✅ | 53 / 22 states | Default-DENY sweep; campable refuges are rare boat-in/island needles |
 | 7 | WMA | ✅ | 192 / 42 states | note comprehensively, pin selectively (floor 3); verify dropped BLM/NF/USACE mislabels |
-| 8 | State Forest | 🟡 | 3 / GA, AL | |
+| 8 | State Forest | ✅ | 467 / 40 states | dual-model + enumerate-and-keep (floor 2); 10 states have no SF camping system |
 | 9 | Land Trust | 🟡 | 3 / GA, AL | |
 | 10 | Other Parks | 🟡 | 6 / GA, AL | County/municipal/authority |
 | 11 | Scenic River | 🟡 | 9 / GA, AL, SC | |
@@ -214,6 +214,16 @@ Lenses still apply where they fit (Havasupai = a marquee 10-mi hike-in), but cul
 - **Boat-lens gold again:** the pins skew to lake/river-access and big-water tracts — Atchafalaya Basin (Sherburne LA, 5), Caddo Lake boat-in (TX, 5), Apalachicola River (FL, 5), Swan Island on the Kennebec (Steve Powell ME, 5), Jocassee Gorges / Foothills Trail (SC, 5), Sleepy Creek lakes (WV, 5), Appalachian Hills / AEP ReCreation lakes (OH, 5).
 - **Distribution:** VA 13, WV/FL 9, ID 8, MT 7, WA 7 lead; 40 of 48 run-states produced pins (GA/AL were the original seed). `WMA_DONE = {GA, AL}` in `integrate_staging`; `layers/wma.json` 16 → 197, curated WMA 192 after hierarchy absorption.
 
+### Layer 8 — State Forest ✅ (467 rows, 40 states — verified)
+**The first enumerate-and-keep regional layer (floor 2, not WMA's 3), and the one that most needed the per-state MODEL determination** — because "state forest" is the most-confused designation in the country.
+
+- **10 states have NO state-forest camping system at all** (AZ, CO, KS, MS, NE, NV, NM, OK, TX, VA) — a real finding. Their forestry agencies (DFFM, CSFS, etc.) are fire/assistance outfits that own no campgrounds; what's called state-forest camping is national-forest (Coronado, Apache-Sitgreaves) or state-park land (CO's "State Forest State Park" is a CPW *park*). The verify stage returned these as honest zeros — the manager check is load-bearing here.
+- **Dual-model, determined per state:** *dispersed-throughout* (PA, NY Forest Preserve, WA/OR DNR, MI/MN — a policy "umbrella" row + named primitive areas + lean-tos) vs *developed-campground* (FL, MI/MN roster-rich — a campground roster). FL (49), WI (41), NY (36), PA (27), MI (26), WA (24) lead.
+- **Enumerate-and-keep held:** 81 honest 2s kept (no aggressive floor), 254 / 127 / 25 for 3/4/5. The `shelter` type carries the Adirondack/Catskill/Allagash lean-tos.
+- **Boat-lens fives are the Adirondack/Northeast paddle gems:** St. Regis Canoe Area, Saranac Lake Islands (boat-in), Lows Lake / Bog River Flow, Forked Lake (NY); Maine's **Allagash Wilderness Waterway** + Bigelow/Flagstaff; NJ Wharton (Pine Barrens) + Worthington/Delaware; FL Tate's Hell / Blackwater / Withlacoochee; MD Green Ridge / Savage River.
+- **A compiler fix it forced:** state forests name rows `<Unit> - <Camp>`, so distinct camps in one forest (Jackson SF Camp One vs Horse Camp; Mountain Home Frasier Mill vs Shake Camp) share the unit name within 1 km and the word-rule false-merged them — the NP-NP failure mode again. **Extended the word-rule exemption to same-layer state-forest pairs** (§7); cross-layer SF→state-park merges (correct same-place collapses) still fire. Restored 8 distinct camps (459 → 467).
+- **Files & run:** `layers/state_forest.json` (489); curated 467 after 25 correct cross-layer absorptions (the DCR states where state forest = state park). `SF_DONE = {GA, AL}`. The run hit the **session cap mid-flight** and was finished via `resumeFromRunId` (the journal replayed the done states free) — the textbook cap-and-salvage.
+
 ### The discovery toolkit — seven reusable approaches
 
 The five completed layers produced a toolkit of distinct discovery methods. Each remaining layer inherits one or two — naming them turns the plan for 6–12 into a mapping exercise, not a fresh design each time.
@@ -226,11 +236,9 @@ The five completed layers produced a toolkit of distinct discovery methods. Each
 6. **Curated-marquee** (the "5s are rare" discipline) — destination-grade only, deliberately not exhaustive.
 7. **Verify-inline vs deferred-verify** (size-dependent QA) — small layers verify as authored; large layers author then run a verify-only pass.
 
-### Layers 8–12 — Regional layers (🟡 GA/AL/SC only) — planned national approach
+### Layers 9–12 — Regional layers (🟡 GA/AL/SC only) — planned national approach
 
-Built during the original three-state pass; each needs national expansion. **NWR (6) and WMA (7) are now complete (see above)** and validated the doctrine: map each layer to a toolkit technique, size the agent fan-out to the layer, pin to the floor. The planned approach per remaining layer:
-
-**8 · State Forest — *Roster-filter OR System-per-mode, chosen per-state by MODEL.*** Two models (the dual model already flagged for this layer): **dispersed-throughout** (PA ~2.2M ac free primitive w/ permit, NY Forest Preserve, WA/OR DNR — treat like a mini-national-forest: note the policy, pin named primitive areas + lean-tos) vs **developed-campground** (most Southern state forests — a plain roster). MI/MN are roster-rich (~130 rustic MI state-forest campgrounds); the **shelter** type returns (Adirondack/Catskill lean-tos). **Determine the model per state before enumerating** — it is NOT "dispersed land" wholesale. Moderate yield, mostly verifiable.
+Built during the original three-state pass; each needs national expansion. **NWR (6), WMA (7), and State Forest (8) are now complete (see above)** and validated the doctrine: map each layer to a toolkit technique, size the agent fan-out to the layer, pin to the floor. The planned approach per remaining layer:
 
 **9 · Land Trust — *Default-DENY sweep, tiny.*** Most trust/preserve land is day-use; the Nature Conservancy generally bans camping. The few campable ones are special-access systems: Maine's AMC huts + Maine Island Trail (boat-in), some Western conservancies, Forever Wild AL tracts, Lula Lake. ~20–40 nationally. **Verify-inline.** The hut/island-trail systems are the marquee.
 
@@ -240,7 +248,7 @@ Built during the original three-state pass; each needs national expansion. **NWR
 
 **12 · Lake — *Spine-anchor on USACE — the BLM of this layer.*** The Army Corps of Engineers is the **#1 federal camping provider after the Forest Service** (~2,500 reservoir recreation areas), all on Recreation.gov and fully verifiable. Enumerate Corps lakes with campgrounds first, then TVA / Bureau of Reclamation / state lake rec areas; lake stays the bottom catch-all for residual reservoir rows. Highest yield-per-effort and verifiability of anything remaining — **the easy big win**.
 
-**Execution note:** at the owner's direction we are running the regional layers in **numerical order (6 → 12)**, not the yield-optimized order below. NWR (6) and WMA (7) ✅ done; **State Forest (8) is next**.
+**Execution note:** at the owner's direction we are running the regional layers in **numerical order (6 → 12)**, not the yield-optimized order below. NWR (6), WMA (7), and State Forest (8) ✅ done; **Land Trust (9) is next**.
 
 **Suggested sequence** (yield × verifiability × effort, recorded for reference): **(1)** Lake/USACE — biggest verifiable win, Recreation.gov does the work; **(2)** State Forest — substantial, settles the dual-model question; **(3)** Land Trust — quick high-filter sweep; **(4)** Scenic River — boat-lens gold, decide the dedup fork first; **(5)** Other Parks — curated judgment pass; **(6)** WMA — its own fan-out campaign, save for last.
 
@@ -255,9 +263,9 @@ Hard-won rules (in order). Two rows merge (higher layer wins) if:
 2. **Cross-state guard** — `a.state !== b.state` → **never merge** (same-named parks exist in different states: Wildcat Mountain SP in WI vs Wildcat Den in IA, etc.).
 3. **Exact normalized name** within 0.25° (~28 km).
 4. **Prefix match** (one name starts with the other) within 0.07°.
-5. **Distinctive-word match within 0.009° (~1 km)** — share a 5+ letter word AFTER removing the **stoplist** of generic camping/geography words (`campground, recreation, creek, river, lake, falls, wilderness, mountain, canyon, ... upper/lower/north/south, island, reserve, preserve`). **Disabled entirely for NP↔NP pairs** because every campground in an NPS unit shares the unit's distinctive prefix word (Yosemite's Upper/Lower/North Pines all share "pines"+"yosemite") and would false-merge.
+5. **Distinctive-word match within 0.009° (~1 km)** — share a 5+ letter word AFTER removing the **stoplist** of generic camping/geography words (`campground, recreation, creek, river, lake, falls, wilderness, mountain, canyon, ... upper/lower/north/south, island, reserve, preserve`). **Disabled for same-layer NP↔NP and state-forest↔state-forest pairs** because every camp in such a unit shares the unit's distinctive prefix word (Yosemite's Upper/Lower/North Pines share "pines"+"yosemite"; Jackson Demonstration State Forest's Camp One/Horse Camp share "jackson"+"demonstration") and would false-merge. Cross-layer pairs (a state-forest camp vs the same-named state park) are NOT exempt — those are correct same-place collapses into the higher layer.
 
-Why each clause exists: clause 2 was added when same-named parks in different states started merging at national scale; the stoplist in clause 5 was added when "Mulky Campground" false-merged into "Cooper Creek Campground" (shared generic "campground"); the NP-NP exemption was added when Yosemite/Kings Canyon/Zion campground clusters collapsed to one row each.
+Why each clause exists: clause 2 was added when same-named parks in different states started merging at national scale; the stoplist in clause 5 was added when "Mulky Campground" false-merged into "Cooper Creek Campground" (shared generic "campground"); the NP-NP exemption was added when Yosemite/Kings Canyon/Zion campground clusters collapsed to one row each, and extended to state-forest pairs when the CA Demonstration State Forest camps (Jackson, Mountain Home) collapsed the same way.
 
 ---
 
@@ -315,8 +323,8 @@ The journal makes every leg lossless; total spend accumulates but no work repeat
 ## 12. Current standings (last build)
 
 ```
-TOTAL 5,402 campgrounds · 50 states · 562 fives
-score 5:562  4:1767  3:2186  2:887
+TOTAL 5,866 campgrounds · 50 states · 587 fives
+score 5:587  4:1884  3:2429  2:966
 
 national park   491  (39 states)   ✅
 state park     1894  (50 states)   ✅
@@ -325,11 +333,11 @@ blm             473  (12 states)   ✅
 tribal           39  (16 states)   ✅
 nwr              53  (22 states)   ✅
 wma             192  (42 states)   ✅
-state forest      3  (GA/AL)       🟡
+state forest    467  (40 states)   ✅
 land trust        3  (GA/AL)       🟡
 other parks       6  (GA/AL)       🟡
 scenic-river      9  (GA/AL/SC)    🟡
 lake             25  (GA/AL)       🟡
 ```
 
-**Status:** the 5 big public-land layers + **NWR (6)** + **WMA (7)** are **complete** (WMA national expansion 2026-06-14: 192 rows, 42 states, floored at 3 via the curation doctrine). **Next:** continuing the regional layers in **numerical order** — **State Forest (8)** is next (dual-model: dispersed-throughout vs developed-campground, determine the model per state first), then Land Trust, Other Parks, Scenic River, Lake. The per-layer approach for each is documented in §6, the curation doctrine in §5a; optional later, a verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery] for the reusable per-layer method.
+**Status:** the 5 big public-land layers + **NWR (6)** + **WMA (7)** + **State Forest (8)** are **complete** (State Forest 2026-06-14: 467 rows, 40 states, dual-model enumerate-and-keep; 10 states have no SF camping system). **Next:** continuing the regional layers in **numerical order** — **Land Trust (9)** is next (tiny, default-DENY — most trust land is day-use; the hut / island-trail systems are the marquee), then Other Parks, Scenic River, Lake. The per-layer approach for each is documented in §6, the curation doctrine in §5a; optional later, a verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery] for the reusable per-layer method.
