@@ -2,7 +2,7 @@
 
 The pipeline that discovers, scores, and compiles every **individually-campable site in the United States** into a 12-layer land-designation hierarchy, assigns each to its EPA ecoregion (Level III → Level IV), and renders it on the ecoregion explorers. A curated, personally-scored "where can I actually camp" atlas — the data backbone of the **Ecotone** app target.
 
-Lives in `superorganism/dashboard/prototypes/`. As of last build: **5,908 campgrounds across 50 states, 590 fives.**
+Lives in `superorganism/dashboard/prototypes/`. As of last build: **6,050 campgrounds across 50 states, 610 fives.**
 
 ---
 
@@ -141,7 +141,7 @@ The layers are an ownership/designation taxonomy, top-to-bottom by precedence (`
 | 7 | WMA | ✅ | 192 / 42 states | note comprehensively, pin selectively (floor 3); verify dropped BLM/NF/USACE mislabels |
 | 8 | State Forest | ✅ | 467 / 40 states | dual-model + enumerate-and-keep (floor 2); 10 states have no SF camping system |
 | 9 | Land Trust | ✅ | 45 / 18 states | thematic default-DENY; islands + West conservancies + East preserves |
-| 10 | Other Parks | 🟡 | 6 / GA, AL | County/municipal/authority |
+| 10 | Other Parks | 🟡 | 148 / 30 states | PARTIAL (3 of 4 regions) — curated-marquee; Midwest + West recalibration owed |
 | 11 | Scenic River | 🟡 | 9 / GA, AL, SC | |
 | 12 | Lake | 🟡 | 25 / GA, AL | USACE & utility reservoirs (residual base) |
 
@@ -233,6 +233,16 @@ Lenses still apply where they fit (Havasupai = a marquee 10-mi hike-in), but cul
 - **Definitional call:** membership/permit-required is fine (cheap access); **bunk-lodging-only huts are excluded** (a building of bunks is a lodge, not camping) — only hut systems that ALSO offer tent sites count.
 - **Dedup note:** both agents found Catalina, merged at compile (8 → 4 distinct sites); one 2.4 km-off Parsons Landing dup was removed by hand (beyond the 1 km word-rule). No `integrate_staging` wiring — appended `staging/lt_final/*.json` directly to `layers/land_trust.json` (5 → 37) and recompiled.
 
+### Layer 10 — Other Parks 🟡 (148 rows, 30 states — PARTIAL, West needs recalibration)
+**Curated-marquee, floor 4 — pin only county/regional/municipal park campgrounds that rival a state park, NOT a county-by-county sweep.** 4 regional agents (West / Mountain-Plains / Midwest / East), verify-inline. Three of four landed across two monthly-cap waves:
+
+- **East (47):** Fort De Soto (FL, 5), James Island (SC, 5), Southaven (NY), Winslow Memorial (ME); strong Florida + Suffolk County NY. CT/VT/NH/DE confirmed empty of county-park camping. Well-calibrated (5 fives).
+- **West (90):** Maricopa County desert parks (Lake Pleasant, McDowell), East Bay Regional (Anthony Chabot, Del Valle), San Diego County, Sand Flats/Moab, Anini Beach (HI), Salt Creek (WA). Rich — but the West agent **over-inflated scores (15 fives / 73 fours)** vs the others' restraint. Landed as-is; a **recalibration pass is owed** (it pollutes the 5+ filter until fixed).
+- **Mountain-Plains (8):** tight and correct — Pace Bend / Lake Travis (TX, 5), Horsetooth (CO), Beaver Creek (MT, largest US county park), Spearfish (SD). The Plains are mostly state/COE, so a small set is right.
+- **OWED (monthly cap):** the **Midwest region** (MI/WI county systems are strong — expect a real yield) + the **West recalibration**.
+- **Calibration lesson:** the first West agent inflated; adding an explicit "5s are RARE, 1-3 per region, don't score most rows 5" instruction to the Mountain-Plains/Midwest prompts fixed it on the spot. The West rows predate that fix.
+- **Files:** `layers/other_parks.json` (145); `other_parks` added to the `build_layers` load list; appended directly + recompiled (no `integrate_staging` wiring).
+
 ### The discovery toolkit — seven reusable approaches
 
 The five completed layers produced a toolkit of distinct discovery methods. Each remaining layer inherits one or two — naming them turns the plan for 6–12 into a mapping exercise, not a fresh design each time.
@@ -245,17 +255,15 @@ The five completed layers produced a toolkit of distinct discovery methods. Each
 6. **Curated-marquee** (the "5s are rare" discipline) — destination-grade only, deliberately not exhaustive.
 7. **Verify-inline vs deferred-verify** (size-dependent QA) — small layers verify as authored; large layers author then run a verify-only pass.
 
-### Layers 10–12 — Regional layers (🟡 GA/AL/SC only) — planned national approach
+### Layers 11–12 — Regional layers (🟡 GA/AL/SC only) — planned national approach
 
-Built during the original three-state pass; each needs national expansion. **NWR (6), WMA (7), State Forest (8) complete; Land Trust (9) partial (see above)** — all validated the doctrine: map each layer to a toolkit technique, size the agent fan-out to the layer, pin to the floor. The planned approach per remaining layer:
-
-**10 · Other Parks — *Curated-marquee only — do NOT enumerate every county.*** Pin the destination-grade regional/county systems that rival state parks: Maricopa County desert parks (AZ — genuine 4–5s), East Bay Regional (CA), San Diego County, the big metro districts. Quality-gated, **not** coverage-gated — the "5s are rare" rubric applied at the *system* level. Judgment-heavy; **verify-inline**.
+Built during the original three-state pass; each needs national expansion. **NWR (6), WMA (7), State Forest (8), Land Trust (9) complete; Other Parks (10) partial (see above)** — all validated the doctrine: map each layer to a toolkit technique, size the agent fan-out to the layer, pin to the floor. The planned approach per remaining layer:
 
 **11 · Scenic River — *System-per-mode where the unit is a RIVER SEGMENT and the mode is boat-in/gravel-bar.*** The owner's boat lens makes this high-value: Buffalo (AR), Current/Jacks Fork (MO), Middle Fork Salmon + Selway (ID, lottery), Green/Yampa (permit), Allagash (ME). Unique gate is **permit/lottery** for the Western multi-day floats. **Design fork:** most famous floats run *through* national forest/BLM, so the hierarchy (scenic-river = rank 11) would absorb them into NF/BLM and erase the river identity — either exempt scenic-river from downward dedup (treat it as a corridor overlay) or pin the bookable put-in/take-out. Lean: pin access points + permit regime, let the corridor be the "why."
 
 **12 · Lake — *Spine-anchor on USACE — the BLM of this layer.*** The Army Corps of Engineers is the **#1 federal camping provider after the Forest Service** (~2,500 reservoir recreation areas), all on Recreation.gov and fully verifiable. Enumerate Corps lakes with campgrounds first, then TVA / Bureau of Reclamation / state lake rec areas; lake stays the bottom catch-all for residual reservoir rows. Highest yield-per-effort and verifiability of anything remaining — **the easy big win**.
 
-**Execution note:** at the owner's direction we are running the regional layers in **numerical order (6 → 12)**, not the yield-optimized order below. NWR (6), WMA (7), State Forest (8), Land Trust (9) ✅ done; **Other Parks (10) is next** — but the remaining agent work (Other Parks, Scenic River, Lake) is currently halted by the **monthly spend cap** (raise at claude.ai/settings/usage, or it clears at the month boundary).
+**Execution note:** at the owner's direction we are running the regional layers in **numerical order (6 → 12)**, not the yield-optimized order below. NWR (6), WMA (7), State Forest (8), Land Trust (9) ✅ done; Other Parks (10) 🟡 partial (3 of 4 regions); **Scenic River (11) is next** — but the remaining agent work (Other Parks Midwest + West recalibration, Scenic River, Lake) is currently halted by the **monthly spend cap** (raise at claude.ai/settings/usage, or it clears at the month boundary).
 
 **Suggested sequence** (yield × verifiability × effort, recorded for reference): **(1)** Lake/USACE — biggest verifiable win, Recreation.gov does the work; **(2)** State Forest — substantial, settles the dual-model question; **(3)** Land Trust — quick high-filter sweep; **(4)** Scenic River — boat-lens gold, decide the dedup fork first; **(5)** Other Parks — curated judgment pass; **(6)** WMA — its own fan-out campaign, save for last.
 
@@ -330,8 +338,8 @@ The journal makes every leg lossless; total spend accumulates but no work repeat
 ## 12. Current standings (last build)
 
 ```
-TOTAL 5,908 campgrounds · 50 states · 590 fives
-score 5:590  4:1911  3:2441  2:966
+TOTAL 6,050 campgrounds · 50 states · 610 fives
+score 5:610  4:2017  3:2457  2:966
 
 national park   491  (39 states)   ✅
 state park     1894  (50 states)   ✅
@@ -342,9 +350,9 @@ nwr              53  (22 states)   ✅
 wma             192  (42 states)   ✅
 state forest    467  (40 states)   ✅
 land trust       45  (18 states)   ✅
-other parks       6  (GA/AL)       🟡
+other parks     148  (30 states)   🟡 partial
 scenic-river      9  (GA/AL/SC)    🟡
 lake             25  (GA/AL)       🟡
 ```
 
-**Status:** the 5 big public-land layers + **NWR (6)** + **WMA (7)** + **State Forest (8)** + **Land Trust (9)** are **complete** — **9 of 12 layers, 5,908 campgrounds**. **Blocked:** the remaining agent work — Other Parks (10), Scenic River (11), Lake (12) — is currently halted by the **monthly spend cap** (raise at claude.ai/settings/usage, or it resets at the month boundary). **When unblocked:** Other Parks (curated-marquee — `staging/op_final/` is staged-empty, the 4 regional agents are ready), then Scenic River (decide the put-in-vs-corridor dedup fork — §6), Lake (USACE spine, floor-2 cheap 2s). Per-layer approach in §6, curation doctrine in §5a; optional later, a verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery].
+**Status:** the 5 big public-land layers + **NWR (6)** + **WMA (7)** + **State Forest (8)** + **Land Trust (9)** are **complete**, and **Other Parks (10) is partial** (148 rows, 3 of 4 regions; the Midwest region + a West recalibration are owed). **6,050 campgrounds.** **Blocked:** the remaining agent work — Other Parks Midwest + West recalibration, Scenic River (11), Lake (12) — is halted by the **monthly spend cap** (raise at claude.ai/settings/usage, or it resets at the month boundary). **When unblocked:** finish Other Parks Midwest + recalibrate the West rows, then Scenic River (decide the put-in-vs-corridor dedup fork — §6), Lake (USACE spine, floor-2 cheap 2s). Per-layer approach in §6, curation doctrine in §5a; optional later, a verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery].
