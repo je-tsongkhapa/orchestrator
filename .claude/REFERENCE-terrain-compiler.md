@@ -2,7 +2,7 @@
 
 The pipeline that discovers, scores, and compiles every **individually-campable site in the United States** into a 12-layer land-designation hierarchy, assigns each to its EPA ecoregion (Level III → Level IV), and renders it on the ecoregion explorers. A curated, personally-scored "where can I actually camp" atlas — the data backbone of the **Ecotone** app target.
 
-Lives in `superorganism/dashboard/prototypes/`. As of last build: **5,895 campgrounds across 50 states, 590 fives.**
+Lives in `superorganism/dashboard/prototypes/`. As of last build: **5,908 campgrounds across 50 states, 590 fives.**
 
 ---
 
@@ -140,7 +140,7 @@ The layers are an ownership/designation taxonomy, top-to-bottom by precedence (`
 | 6 | NWR | ✅ | 53 / 22 states | Default-DENY sweep; campable refuges are rare boat-in/island needles |
 | 7 | WMA | ✅ | 192 / 42 states | note comprehensively, pin selectively (floor 3); verify dropped BLM/NF/USACE mislabels |
 | 8 | State Forest | ✅ | 467 / 40 states | dual-model + enumerate-and-keep (floor 2); 10 states have no SF camping system |
-| 9 | Land Trust | 🟡 | 32 / 11 states | PARTIAL — islands + West conservancies done; East sweep owes rows (monthly spend cap) |
+| 9 | Land Trust | ✅ | 45 / 18 states | thematic default-DENY; islands + West conservancies + East preserves |
 | 10 | Other Parks | 🟡 | 6 / GA, AL | County/municipal/authority |
 | 11 | Scenic River | 🟡 | 9 / GA, AL, SC | |
 | 12 | Lake | 🟡 | 25 / GA, AL | USACE & utility reservoirs (residual base) |
@@ -224,12 +224,12 @@ Lenses still apply where they fit (Havasupai = a marquee 10-mi hike-in), but cul
 - **A compiler fix it forced:** state forests name rows `<Unit> - <Camp>`, so distinct camps in one forest (Jackson SF Camp One vs Horse Camp; Mountain Home Frasier Mill vs Shake Camp) share the unit name within 1 km and the word-rule false-merged them — the NP-NP failure mode again. **Extended the word-rule exemption to same-layer state-forest pairs** (§7); cross-layer SF→state-park merges (correct same-place collapses) still fire. Restored 8 distinct camps (459 → 467).
 - **Files & run:** `layers/state_forest.json` (489); curated 467 after 25 correct cross-layer absorptions (the DCR states where state forest = state park). `SF_DONE = {GA, AL}`. The run hit the **session cap mid-flight** and was finished via `resumeFromRunId` (the journal replayed the done states free) — the textbook cap-and-salvage.
 
-### Layer 9 — Land Trust 🟡 (32 rows, 11 states — PARTIAL)
-**Tiny, default-DENY, and thematic — not a geographic fan-out** (campable land trusts are a clustered handful, so 3 deep thematic agents beat a 48-state sweep). Two of three landed before the **monthly spend cap** hit:
+### Layer 9 — Land Trust ✅ (45 rows, 18 states — verified)
+**Tiny, default-DENY, and thematic — not a geographic fan-out** (campable land trusts are a clustered handful, so 3 deep thematic agents beat a 48-state sweep). All three landed (the East agent after a monthly-cap pause):
 
 - **Islands & water trails (17) — the boat-lens core:** Catalina Island Conservancy boat-in coves (5) + Little Harbor / Parsons Landing / Black Jack; the Maine Island Trail via Maine Coast Heritage Trust / Chewonki / Harpswell; Squam Lakes Association (NH); Hudson River Watertrail (NY). Sharp manager check — excluded state-owned "MITA" islands, Catalina's Island-Company land (Two Harbors), members-only paddler trails.
 - **Western conservancies (16):** The Wildlands Conservancy (Whitewater Preserve 5, Wind Wolves, Mission Creek), Catalina trail camps, American Prairie / Buffalo Camp (MT), Jug Handle Farm (CA). Owner verified a private conservancy, not adjacent NF/BLM.
-- **OWED (blocked by the monthly cap):** the **East/Midwest preserve sweep** — New England regional trusts, Mass Audubon, Mohonk, hut-to-hut tent systems. `staging/lt_final/EAST.json` is empty; run it when the cap clears.
+- **East/Midwest preserves (14):** Whiterock Conservancy (IA — purpose-built for boat+bike+hike, Middle Raccoon water trail), Downeast Lakes Community Forest (ME paddle-in), AMC Maine Woods Roach Ponds, Bear Run (PA), ADK Heart Lake, Pioneer Forest (MO), + 2 rare TNC carve-outs (Chapman Pond CT, Barton's Beach AL). AMC *lodges* (Little Lyford/Gorman Chairback) excluded as bunks-only; Mohonk day-use; easement-only trusts dropped.
 - **Definitional call:** membership/permit-required is fine (cheap access); **bunk-lodging-only huts are excluded** (a building of bunks is a lodge, not camping) — only hut systems that ALSO offer tent sites count.
 - **Dedup note:** both agents found Catalina, merged at compile (8 → 4 distinct sites); one 2.4 km-off Parsons Landing dup was removed by hand (beyond the 1 km word-rule). No `integrate_staging` wiring — appended `staging/lt_final/*.json` directly to `layers/land_trust.json` (5 → 37) and recompiled.
 
@@ -255,7 +255,7 @@ Built during the original three-state pass; each needs national expansion. **NWR
 
 **12 · Lake — *Spine-anchor on USACE — the BLM of this layer.*** The Army Corps of Engineers is the **#1 federal camping provider after the Forest Service** (~2,500 reservoir recreation areas), all on Recreation.gov and fully verifiable. Enumerate Corps lakes with campgrounds first, then TVA / Bureau of Reclamation / state lake rec areas; lake stays the bottom catch-all for residual reservoir rows. Highest yield-per-effort and verifiability of anything remaining — **the easy big win**.
 
-**Execution note:** at the owner's direction we are running the regional layers in **numerical order (6 → 12)**, not the yield-optimized order below. NWR (6), WMA (7), State Forest (8) ✅ done; Land Trust (9) 🟡 partial; **Other Parks (10) is next** — but all remaining agent work is currently halted by the **monthly spend cap** (raise at claude.ai/settings/usage, or it clears at the month boundary).
+**Execution note:** at the owner's direction we are running the regional layers in **numerical order (6 → 12)**, not the yield-optimized order below. NWR (6), WMA (7), State Forest (8), Land Trust (9) ✅ done; **Other Parks (10) is next** — but the remaining agent work (Other Parks, Scenic River, Lake) is currently halted by the **monthly spend cap** (raise at claude.ai/settings/usage, or it clears at the month boundary).
 
 **Suggested sequence** (yield × verifiability × effort, recorded for reference): **(1)** Lake/USACE — biggest verifiable win, Recreation.gov does the work; **(2)** State Forest — substantial, settles the dual-model question; **(3)** Land Trust — quick high-filter sweep; **(4)** Scenic River — boat-lens gold, decide the dedup fork first; **(5)** Other Parks — curated judgment pass; **(6)** WMA — its own fan-out campaign, save for last.
 
@@ -330,8 +330,8 @@ The journal makes every leg lossless; total spend accumulates but no work repeat
 ## 12. Current standings (last build)
 
 ```
-TOTAL 5,866 campgrounds · 50 states · 587 fives
-score 5:587  4:1884  3:2429  2:966
+TOTAL 5,908 campgrounds · 50 states · 590 fives
+score 5:590  4:1911  3:2441  2:966
 
 national park   491  (39 states)   ✅
 state park     1894  (50 states)   ✅
@@ -341,10 +341,10 @@ tribal           39  (16 states)   ✅
 nwr              53  (22 states)   ✅
 wma             192  (42 states)   ✅
 state forest    467  (40 states)   ✅
-land trust       32  (11 states)   🟡 partial
+land trust       45  (18 states)   ✅
 other parks       6  (GA/AL)       🟡
 scenic-river      9  (GA/AL/SC)    🟡
 lake             25  (GA/AL)       🟡
 ```
 
-**Status:** the 5 big public-land layers + **NWR (6)** + **WMA (7)** + **State Forest (8)** are **complete**, and **Land Trust (9) is partial** (32 rows — islands + Western conservancies; the East/Midwest sweep owes rows). **Blocked:** the remaining agent work — Land Trust's East sweep plus Other Parks (10), Scenic River (11), Lake (12) — is currently halted by the **monthly spend cap** (raise at claude.ai/settings/usage, or it resets at the month boundary). **When unblocked:** finish Land Trust East (`staging/lt_final/EAST.json`), then Other Parks (curated-marquee), Scenic River (decide the put-in-vs-corridor dedup fork — §6), Lake (USACE spine, floor-2 cheap 2s). Per-layer approach in §6, curation doctrine in §5a; optional later, a verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery].
+**Status:** the 5 big public-land layers + **NWR (6)** + **WMA (7)** + **State Forest (8)** + **Land Trust (9)** are **complete** — **9 of 12 layers, 5,908 campgrounds**. **Blocked:** the remaining agent work — Other Parks (10), Scenic River (11), Lake (12) — is currently halted by the **monthly spend cap** (raise at claude.ai/settings/usage, or it resets at the month boundary). **When unblocked:** Other Parks (curated-marquee — `staging/op_final/` is staged-empty, the 4 regional agents are ready), then Scenic River (decide the put-in-vs-corridor dedup fork — §6), Lake (USACE spine, floor-2 cheap 2s). Per-layer approach in §6, curation doctrine in §5a; optional later, a verify-only pass on the 26 author-only NF states. See [memory: national-forest camping discovery].
