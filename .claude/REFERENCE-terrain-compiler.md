@@ -2,7 +2,7 @@
 
 The pipeline that discovers, scores, and compiles every **individually-campable site in the United States** into a 12-layer land-designation hierarchy, assigns each to its EPA ecoregion (Level III → Level IV), and renders it on the ecoregion explorers. A curated, personally-scored "where can I actually camp" atlas — the data backbone of the **Ecotone** app target.
 
-Lives in `superorganism/dashboard/prototypes/`. **COMPLETE — all 12 layers built nationally: 6,414 campgrounds across 50 states, 623 fives.**
+Lives in `superorganism/dashboard/prototypes/`. **COMPLETE — all 12 layers built nationally: 6,414 campgrounds across 50 states, 623 fives.** Plus a **Vehicle Trails** route overlay — scenic drives as road-following lines (§13).
 
 ---
 
@@ -365,3 +365,22 @@ lake            287  (32 states)   ✅
 ```
 
 **Status: COMPLETE — all 12 land-designation layers built nationally. 6,414 campgrounds, 50 states, 623 fives.** Runtime-verified: all 6,414 render on `ecoregion-explorer-us.html` across 12 layers, 0 JS errors; ecoregion-assigned except AK/HI (EPA L4 is CONUS-only) and 8 true-offshore islands. **Optional polish only:** a verify-only pass on the 26 author-only NF states (the unverified tail), and the regional layers were curated-marquee/enumerate-and-keep, so deeper county/livery coverage could always be added. Per-layer method in §6, curation doctrine in §5a. See [memory: national-forest camping discovery].
+
+---
+
+## 13. Vehicle Trails — the route overlay
+
+A **modular route overlay** on the same explorer — **lines, not points** — distinct from the 12 camp/designation layers and (for now) not threaded to campsites. It's the driving member of a planned *"trails by mode"* family (hiking / bike / paddle / vehicle). Built **scenic drives first**, then the dirt sub-modes.
+
+**Schema** (one object per route): `name`, `state` (primary) + `states[]`, `designation` (National Scenic Byway / All-American Road), `subtype` (scenic-drive · bdr · forest-loop · pass · 4x4), `surface`, `length_mi`, `path` (a **multi-line** polyline: an array of `[lat,lng]` segment arrays), `score` 2-5, `why`, `notes`, `layer: "vehicle trails"`.
+
+**The crux was geometry — a route is a real road centerline an agent can't author.** Findings, in order:
+- **OSRM** (authored waypoints routed through the public OSRM API) is exact for **dominant-corridor roads** (Going-to-the-Sun 4% length-drift, Big Sur 2%, Beartooth 9%) but **fails on slow purpose-built parkways** (Blue Ridge Parkway 28% — OSRM hops onto faster parallel roads), and **denser waypoints make it worse** (42%) because you can't pin a route to a road OSRM won't otherwise choose.
+- **OSM/Overpass** is the right centerline source but the public infra is unusable at scale (overpass-api.de WAF-blocks with 406; the kumi mirror rate-limits big queries; a bare `name` query returns 555 tangled ways — every overlook and spur shares the byway name).
+- **Solution: the authoritative FHWA dataset.** "Scenic Byways 2022 06 24" on `services.arcgis.com` (a reliable ArcGIS FeatureServer) carries line geometry for **778 designated byways** — 151 National Scenic Byways + 31 All-American Roads + 627 state byways — with `NAME`, `STATE`, `NSB_DESIG`, `DESIGNATS`, `ROUTE_LENG`. `_build/build_byways.mjs` pulls it, filters to the federal designations, groups segments by name, and emits **multi-line** paths (render each segment as-is — no stitching artifacts; handles fragmented multi-state byways like Great River Road / Route 66 and ferry routes). The BRP comes out **exact** (469 vs 469 mi). **OSRM (`build_trails.mjs`) is retained as the fallback** for non-designated book drives.
+
+**Scoring is honest 2-5, NOT auto-by-tier.** 5 regional agents judge each byway on real scenic + boat/bike/hike merit; the program designates on six intrinsic qualities (scenic / historic / cultural / archaeological / natural / recreational), so urban *heritage* byways score **2 even at the All-American Road tier** (Las Vegas Strip, Detroit's Woodward Avenue). Scores live in the committed `layers/vehicle_trails_meta.json` (name → score/why/notes); `build_byways` merges them onto the geometry by name.
+
+**Pipeline:** `layers/vehicle_trails_meta.json` (committed scores) + live FHWA geometry → `_build/build_byways.mjs` → `data/us/vehicle_trails.json` (gitignored, regenerable) → the explorer fetches it, draws `L.polyline` per route (earthy-brown by score) with a **"Vehicle Trails" legend toggle + the shared score floor** (the urban 2s hide at the default ≥3 view; `5+` leaves the 23 icons).
+
+**Standings:** **151 federal byways** (120 NSB + 31 AAR) — exact geometry, scored & described, rendering alongside the 6,414 camps. Spread: **23 fives / 62 fours / 60 threes / 6 twos** (145 are 3+). **Next:** the **627 state byways** (same pipeline + a scoring pass), **book-only** non-designated drives (OSRM), and the **dirt sub-modes** — BDRs, forest-road loops, alpine passes, 4x4/OHV (published-GPX ingest).
