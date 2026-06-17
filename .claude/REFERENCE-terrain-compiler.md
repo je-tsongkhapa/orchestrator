@@ -374,6 +374,26 @@ A **modular route overlay** on the same explorer — **lines, not points** — d
 
 **Schema** (one object per route): `name`, `state` (primary) + `states[]`, `tier` (federal / state / book / dirt), `designation` (All-American Road / National Scenic Byway / State Scenic Byway / Scenic Drive), `subtype` (scenic-drive · bdr · forest-loop · pass · 4x4), `surface`, `length_mi`, `path` (a **multi-line** polyline: an array of `[lat,lng]` segment arrays), `score` 2-5, `why`, `notes`, `approximate` (true → dashed; BDR corridors + corridor-fallback dirt routes), `layer: "vehicle trails"`.
 
+### Process by sub-layer
+
+Each trail *type* is its own sub-layer with its own geometry method — that per-type process is the heart of this layer:
+
+| Sub-layer | Geometry method | Curation | Scoring | Render |
+|---|---|---|---|---|
+| **Scenic Byways** — federal NSB+AAR (151) | **FHWA FeatureServer** — authoritative line geometry, segments grouped by name → multi-line (exact, e.g. BRP 469/469mi) | enumerate-and-keep all | 5 regional agents, honest 2–5 | brown by score, default-**ON** |
+| **State Byways** (624) | same **FHWA FeatureServer**, `tier=state` | enumerate-and-keep all | 13 regional agents | tan, thinner, default-**OFF** (density) |
+| **Book Drives** (74) | **OSRM** routes *authored* waypoints — clean single-pass, NO out-and-back spurs, `length_mi`=that route so routed-vs-stated drift is a real signal | dedup the book's 120 vs the 775 byways → non-designated residual | 8 regional agents author + score | purple by score, default-**ON** |
+| **Dirt — pass / loop / 4x4** (72) | **OSM/Overpass** by name + state-bbox → filter to unpaved drivable ways → multi-line; misses resolved by alias / FS-road-number / component-road | **marquee only** (universe unbounded) | agents score + resolve misses | rust-orange, default-**OFF** |
+| **Dirt — BDRs** (25) | **approximate corridors** authored from public route descriptions (official GPX is redistribution-prohibited) | the complete official set | agents author + score | rust-orange **dashed**, default-**OFF** |
+
+**Choosing the geometry method (the recurring crux)** — for any new trail type, walk down until one works:
+1. **Authoritative published line data?** (gov't GIS) → use it directly. Best: exact + redistributable. *FHWA Scenic Byways for byways; USFS Road Core ArcGIS as a forest-road backstop.*
+2. **A named road/route OpenStreetMap has?** → **Overpass** by name + bbox (User-Agent header dodges the WAF; `lz4`/`kumi` mirrors as fallback). Free + ODbL. Needs surface/highway filtering + alias resolution for multi-road or oddly-named routes. *Dirt passes / 4x4.*
+3. **A real road an engine will follow from waypoints?** → **OSRM**-route authored waypoints, one clean pass. Works for road-following on pavement; fails on slow parkways and all unpaved. *Book drives.*
+4. **None of the above** (no data, legally blocked, or off-grid) → **author an approximate corridor** from public descriptions; render **dashed + labeled**, never claim precision. *BDRs.*
+
+**The 4-step pipeline (every sub-layer):** (1) **Enumerate** the set — an authoritative roster, a book's TOC, or a curated marquee list (the floor rises as the universe gets unbounded; §5a). (2) **Solve geometry** via the ladder above — the crux, different per type. (3) **Score 2–5 honestly** via a regional agent fan-out (+ `why`, `notes`, season/surface) — verify the *spread* differentiates, don't rubber-stamp. (4) **Render** as a toggleable `tier` with the shared score-floor: color-by-score, with a distinct hue + default-on/off + dash-if-approximate per provenance. Always **visually verify** geometry on a contact sheet (drift/length is only a proxy — it can't tell a right-length wrong-road from a correct one).
+
 **The crux was geometry — a route is a real road centerline an agent can't author.** Findings, in order:
 - **OSRM** (authored waypoints routed through the public OSRM API) is exact for **dominant-corridor roads** (Going-to-the-Sun 4% length-drift, Big Sur 2%, Beartooth 9%) but **fails on slow purpose-built parkways** (Blue Ridge Parkway 28% — OSRM hops onto faster parallel roads), and **denser waypoints make it worse** (42%) because you can't pin a route to a road OSRM won't otherwise choose.
 - **OSM/Overpass** is the right centerline source but the public infra is unusable at scale (overpass-api.de WAF-blocks with 406; the kumi mirror rate-limits big queries; a bare `name` query returns 555 tangled ways — every overlook and spur shares the byway name).
