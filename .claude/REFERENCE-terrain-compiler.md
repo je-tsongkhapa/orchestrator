@@ -554,15 +554,28 @@ The fifth pillar beside camps (§6), routes (§13), stays (§14), and trails (§
 
 **Three rules:** (1) **marquee-curated, not exhaustive** — each editorial type is curated to destination-grade (the only bound that keeps the layer from ballooning past 100k points); authoritative-list types (UNESCO=26, NHL≈2,600, AZA≈240) are naturally bounded. (2) **events store *recurrence* not a date** ("annual · first weekend of October") so they don't go stale; one-off scheduled games are a calendar not an atlas, skipped. (3) **"sports" split** — participatory venues (do-it: golf/ski/climb/surf/skate/disc) under Outdoor & Sports, spectator events (watch-it: recurring marquee games/races) under Events.
 
-**Build order (the GA worked-template model again):** capture the taxonomy (done) → log it (this section) → complete **Georgia** as the worked template → then the full national process. Rendered as a new **Activities** point layer in the explorer (distinct marker, grouped by family/sub-type), parallel to day-hikes/networks.
+**Build order (the GA worked-template model again):** capture the taxonomy (done) → log it (this section) → complete **Georgia** as the worked template (done) → then the full national process. Rendered as a new **Activities** point layer in the explorer (distinct marker, grouped by family/sub-type), parallel to day-hikes/networks.
 
-*Status: taxonomy captured; Georgia prototype building.*
+**Georgia worked-template — 232 things-to-do (DONE):** 8 group-agents, one per family-cluster, each working its authoritative handle (not a regional brainstorm). Counts by family:
+
+| Family | GA count | Sub-types hit |
+|---|---|---|
+| 🎢 Play | 57 | theme/water parks, escape rooms, experiences, tours, arcades, ziplines, geocaching |
+| 🏞️ Outdoor & Sports | 45 | viewpoints, swimming holes, waterfalls, wildlife-viewing, golf/recreation |
+| 🍴 Eat & Drink | 39 | destination restaurants, iconic local eats, breweries, wineries/distilleries |
+| 🏛️ See & Learn | 35 | museums, zoos & aquariums, gardens, observatories, public art |
+| 🗿 Heritage & Curiosities | 31 | NHL, historic sites, Atlas Obscura, roadside Americana |
+| 📅 Events | 25 | festivals, fairs, sporting events, farmers markets |
+
+Scores 2-5 (★5×46 · ★4×116 · ★3×56 · ★2×14); default floor ★3 shows 218, hides the 14 twos. Dedup dropped 4 (Tallulah Gorge, Currahee, World of Coca-Cola, Andersonville → primary identity). **Agents confirmed the GA edge cases** (0 UNESCO World Heritage, 0 ski, ~0 hot springs) rather than padding — the negative result is the positive-enumeration method working. Marker = **amber star** (distinct from camp-circle / stay-diamond / day-hike-triangle / network-square); default-off, score-floor-gated; "Do" tab groups family → sub-type; click → fly + `renderActivity`. Headless `verify_activities.mjs` 14/14, R1 keystone holds, no console errors. Served `data/us/activities.json` (gitignored); committed roster `layers/activities_ga_meta.json`. Dashboard commit `3435c2a` (local).
+
+*Status: taxonomy captured; **Georgia complete (232)**; national next — same 8-cluster fan-out per state/region.*
 
 ---
 
 ## 18. Next / soon
 
-- **Activities layer** (§17) — Georgia worked-template in progress, then national.
+- **Activities layer — national** (§17) — Georgia worked-template DONE (232); run the same 8-cluster fan-out across the remaining states/regions. **This is the active next step.**
 - Thread the layers — proximity-join routes↔camps↔stays↔day-hikes↔networks↔activities into a trip-planner (select a camp → what's near it). The standing unlock; no new data collection needed.
 
-*Recently done:* the national Corps-campground audit (+107 USACE, §6 Layer 12) and the Wave-2 standalone trails re-discovered by type (123 day-hikes + 239 networks across 10 sub-layers, §15).
+*Recently done:* the GA activities worked-template (232 things-to-do, 6 families, §17), the national Corps-campground audit (+107 USACE, §6 Layer 12), and the Wave-2 standalone trails re-discovered by type (123 day-hikes + 239 networks across 10 sub-layers, §15).
