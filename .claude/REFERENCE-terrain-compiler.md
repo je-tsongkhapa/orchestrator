@@ -537,9 +537,32 @@ The one scannable place: for **every** layer and sub-layer, the **authoritative 
 
 ---
 
-## 17. Next / soon
+## 17. Activities — the "things to do" pillar (in progress)
 
-- The activities-layer expansion you described (restaurants, escape rooms, festivals, sporting events, Atlas Obscura, World Heritage / historical sites) — same positive-enumeration-by-type approach we just nailed.
-- Thread the layers — proximity-join routes↔camps↔stays↔day-hikes↔networks into a trip-planner (select a camp → what's near it). The standing unlock; no new data collection needed.
+The fifth pillar beside camps (§6), routes (§13), stays (§14), and trails (§15): **what to DO at a place** — a marquee-curated point layer, scored 2-5 and floored, grouped by family then sub-type. Same discipline as everything since Wave-2: **positive enumeration by type**, each sub-layer from an authoritative handle, marquee-curated so it stays bounded (the Unique-Stays model, NOT "every restaurant in America").
+
+**~34 sub-layers across 6 families:**
+
+| Family | Sub-layers | Authoritative handle |
+|---|---|---|
+| 🍴 Eat & Drink | destination restaurants · iconic local/roadside eats · breweries & taprooms · wineries & distilleries | James Beard + Michelin; Brewers Assoc./GABF; AVA & spirits trails; editorial-marquee |
+| 🎢 Play, Thrill & Experiences | escape rooms · experiences (immersive: Meow Wolf/axe-throwing/VR/classes) · tours (factory/ghost/food/distillery/walking) · amusement & theme parks · water parks · arcades/barcades · ziplines & adventure parks · geocaching | escape-room directories; Airbnb Experiences/Viator; the named-park roster; geocaching.com (oldest active / most-favorited / EarthCaches & virtuals) |
+| 🏛️ See & Learn | museums (art/history/science/natural-history) · zoos & aquariums · botanical gardens & arboretums · observatories/planetariums · public art (murals/sculptures/installations) | AAM-accredited; AZA-accredited; American Public Gardens Assoc.; dark-sky; city public-art registries + sculpture-park/mural-festival rosters |
+| 🗿 Heritage & Curiosities | UNESCO World Heritage · National Historic Landmarks · historic sites & house museums · Atlas Obscura · roadside Americana/oddities | UNESCO list (~26 US); NPS NHL roster (~2,600); National Register; atlasobscura.com; RoadsideAmerica |
+| 📅 Events | festivals (music/food/cultural) · state & county fairs · marquee sporting events (spectator, recurring) · farmers/makers markets | marquee-annual; the fair roster; recurring-race schedules; USDA market directory |
+| 🏞️ Outdoor & Sports | scenic viewpoints/overlooks · swimming holes · hot springs · destination waterfalls · wildlife-viewing · sports & recreation venues (golf/ski/climb/surf/skate/disc) | editorial-marquee; Golf Digest · named ski areas · Mountain Project · Surfline · UDisc |
+
+**Three rules:** (1) **marquee-curated, not exhaustive** — each editorial type is curated to destination-grade (the only bound that keeps the layer from ballooning past 100k points); authoritative-list types (UNESCO=26, NHL≈2,600, AZA≈240) are naturally bounded. (2) **events store *recurrence* not a date** ("annual · first weekend of October") so they don't go stale; one-off scheduled games are a calendar not an atlas, skipped. (3) **"sports" split** — participatory venues (do-it: golf/ski/climb/surf/skate/disc) under Outdoor & Sports, spectator events (watch-it: recurring marquee games/races) under Events.
+
+**Build order (the GA worked-template model again):** capture the taxonomy (done) → log it (this section) → complete **Georgia** as the worked template → then the full national process. Rendered as a new **Activities** point layer in the explorer (distinct marker, grouped by family/sub-type), parallel to day-hikes/networks.
+
+*Status: taxonomy captured; Georgia prototype building.*
+
+---
+
+## 18. Next / soon
+
+- **Activities layer** (§17) — Georgia worked-template in progress, then national.
+- Thread the layers — proximity-join routes↔camps↔stays↔day-hikes↔networks↔activities into a trip-planner (select a camp → what's near it). The standing unlock; no new data collection needed.
 
 *Recently done:* the national Corps-campground audit (+107 USACE, §6 Layer 12) and the Wave-2 standalone trails re-discovered by type (123 day-hikes + 239 networks across 10 sub-layers, §15).
