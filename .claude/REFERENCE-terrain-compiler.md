@@ -452,3 +452,67 @@ The foot member of the trails-by-mode family (§13 built the driving member). Th
 **Bike + paddle (the family completed).** The three human-powered modes merge into one **mode-tagged `JOURNEYS` layer** (hike green / bike blue / paddle teal; per-mode toggles). **Biking (119)** — the USBRS numbered routes, Adventure-Cycling tiers + loops, the Rails-to-Trails Hall of Fame, bikepacking canon (TNGA, Western Wildlands), MTB descents (Whole Enchilada, Downieville) and gravel races — reuses the hiking engine across the Waymarked **cycling + MTB** themes (`{theme}.waymarkedtrails.org`), with the same super-relation-by-bbox-span overrides (TransAmerica = cycling/14469882), US-bounds guard (Whole Enchilada name-matched a route in *Spain*), and the new in-state candidate guard. US OSM coverage is thin for the long road tours / numbered USBRs and the localized MTB/gravel routes, so those are authored corridors. **Paddling (109)** — the National Water Trails System, classic whitewater (Grand Canyon, Middle Fork Salmon), and flatwater canon (Boundary Waters, Allagash) — has **no Waymarked theme**, and a river run has no fixed centerline anyway, so every route is an **authored corridor** (rivers traced put-in→take-out following the real bends — agent-authored with verified endpoints; lakes/islands as loop outlines), dashed. The zoom-gated substrate now **stacks the hiking + cycling** Waymarked rasters (foot + bike "every trail").
 
 **Standings:** **432 journeys** across three modes — **204 hiking** (126 exact OSM/cycling geometry + 78 corridors) + **119 biking** (48 OSM + 71 corridors) + **109 paddling** (all corridors) — **+ 37 day-hikes**, joining 6,414 campgrounds + 948 vehicle routes + 884 stays. All 432 verified centroid-in-declared-state. Committed reproducibility snapshot in `layers/{hike,bike,paddle}_journeys_meta.json` + `layers/{hike,bike,paddle}_corridors.json`; the three `build_*_journeys.mjs` read working staging with a committed-layers fallback. The atlas resolves into **four ontological tiers — regions (ecoregions) · routes (drives + journeys, all four modes) · points (camps, stays, day-hikes) · environments (the zoom-in substrate)**. The trails-by-mode family (§13 vision) is complete and now comprehensive. Next: the deferred **Wave-2 standalone sweep** — per-state day-hikes + trail *networks* that are **not** inside an already-enumerated park/forest/BLM unit (city/county/private/nonprofit land only); then thread the layers (proximity join routes↔camps↔stays↔activities into a trip-planner).
+
+---
+
+## 16. Provenance registry — source & enumeration method per layer/sub-layer
+
+The one scannable place: for **every** layer and sub-layer, the **authoritative source(s) enumerated** + the **enumeration technique**. Three method-classes recur — **authoritative-list** (a finite published roster exists → enumerate it exhaustively: FHWA byways, USBRS, the National Water Trails System), **default-DENY sweep** (assume exclude, hunt the rare needles: NWR, the no-camping parks), and **marquee curation** (no roster exists → a curated expert pass, deliberately not exhaustive, honest per §5a: most stays, MTB/gravel). Detail lives in the cited section; this table is the index. (Geometry is a *separate* axis — for routes/journeys see the per-section geometry ladders in §13/§15.)
+
+### Campgrounds (§6 — the 12-layer designation hierarchy)
+
+| Layer | Authoritative source(s) enumerated | Technique |
+|---|---|---|
+| 1 National Park | nps.gov find-a-park camping pages; Recreation.gov; Wikipedia (coords) | roster-filter (campability) |
+| 2 State Park | each state parks-agency roster × Wikipedia "List of \<State\> state parks" (catches system drift) | roster-filter |
+| 3 National Forest | forestcamping.com → Recreation.gov → fs.usda.gov → Wikipedia, **per forest, all modes** | system-per-mode |
+| 4 BLM | Recreation.gov → blm.gov field offices → BLM National Conservation Lands → Campendium / iOverlander / FreeRoam / The Dyrt (community dispersed) | spine-anchor |
+| 5 Tribal | per-nation tribal sites & permit offices (no central registry) | consent-gate |
+| 6 NWR | fws.gov refuge regulations + Recreation.gov | default-DENY sweep |
+| 7 WMA | each state wildlife-agency camping *policy*, then tract enumeration | note-comprehensively / pin-selectively |
+| 8 State Forest | each state forestry-agency roster + per-state dispersed-vs-developed model | enumerate-and-keep |
+| 9 Land Trust | named conservancies/trusts (Catalina, The Wildlands Conservancy, Maine Coast Heritage, Whiterock, AMC) | thematic default-DENY |
+| 10 Other Parks | county/regional/metro park systems (Maricopa, East Bay Regional, Suffolk Co.) | curated-marquee |
+| 11 Scenic River | private canoe-livery & river-outfitter basecamps (Kittatinny, NOC, Buffalo Outdoor Center) | thematic marquee |
+| 12 Lake | USACE / TVA / Bureau of Reclamation / utility dam-operator camps (Recreation.gov) | spine-anchor |
+
+### Vehicle Trails (§13)
+
+| Sub-layer | Authoritative source enumerated | Technique |
+|---|---|---|
+| Scenic Byways (federal) | FHWA "Scenic Byways" ArcGIS FeatureServer — National Scenic Byways + All-American Roads | authoritative-list (GIS) |
+| State Byways | same FHWA FeatureServer (state-designated tier) | authoritative-list (GIS) |
+| Book Drives | Reader's Digest *Most Scenic Drives in America* (120, Internet-Archive scan) minus byway dups | enumerate-from-source |
+| Dirt — pass / loop / 4x4 | OpenStreetMap via Overpass (name + state-bbox), curated marquee | marquee + OSM |
+| Dirt — BDRs | rideBDR official 25-route set (corridors from public route descriptions; GPX redistribution-blocked) | authoritative-list (corridor) |
+
+### Unique Stays (§14 — 21 sub-types)
+
+| Sub-type(s) | Authoritative source enumerated | Technique |
+|---|---|---|
+| Fire lookouts | Recreation.gov (the one semi-authoritative source) | marquee |
+| Historic grand hotels | Historic Hotels of America (National Trust) | marquee |
+| Backcountry huts | Appalachian Mountain Club + 10th Mountain Division Hut Assoc. | marquee |
+| Guest / dude ranches | Dude Ranchers' Association + editorial | marquee |
+| Glamping resorts | brand rosters (Under Canvas, AutoCamp, Collective Retreats) + editorial | marquee |
+| The other 16 — park lodges · quirky rentals · converted structures · roadside Americana · lighthouses + water · haunted/legendary · country inns · monastery/retreats · castle · farm/vineyard · floating · train-car · observatory · aurora-igloo · tipi/hogan | **editorial marquee — no open dataset** (Airbnb has no public API) | marquee |
+
+### Human-powered Journeys (§15)
+
+| Mode · sub-type | Authoritative source enumerated | Geometry |
+|---|---|---|
+| Hike · nst | the **National Scenic Trails** system (11 congressionally-designated NSTs) | Waymarked |
+| Hike · long | **state long-trail canons** + regional long-trail registries | Waymarked / corridor |
+| Hike · historic | the **National Historic Trails** (NPS auto-tour routes) | corridor |
+| Hike · park | marquee composites inside NPS/NF units (Rim-to-Rim, Teton Crest, Four-Pass) | corridor / Waymarked |
+| Hike · weird / unique | editorial deepen-pass (slot canyons · via-ferrata · high routes · volcanic/badlands) | mixed |
+| Bike · usbr | the **USBRS** — numbered U.S. Bicycle Routes (AASHTO / Adventure Cycling) | corridor |
+| Bike · road-tour / bikepacking | the **Adventure Cycling Route Network** + the bikepacking-route canon | corridor |
+| Bike · rail-trail | the **Rails-to-Trails Conservancy Hall of Fame** | Waymarked-cycling / corridor |
+| Bike · mtb / gravel | marquee (MTB-Project classics + major gravel races: SBT GRVL, Unbound) | corridor |
+| Paddle · water-trail | the **National Water Trails System** (NPS) | corridor |
+| Paddle · river-run | the classic **whitewater + Wild & Scenic Rivers** canon | corridor |
+| Paddle · canoe / sea-kayak | marquee (Boundary Waters, Allagash; coastal blueways) | corridor |
+| all modes | the **National Recreation Trails** (NRT) database — folded across the above | mixed |
+| Day-hikes (activity points) | editorial deepen-pass (6-vein agent fan-out) + Photon geocode | point |
+| Substrate (every-trail) | Waymarked Trails raster tiles (OSM / ODbL), zoom-gated z≥12 | tile |
