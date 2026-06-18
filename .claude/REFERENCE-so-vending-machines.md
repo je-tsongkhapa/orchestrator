@@ -92,4 +92,9 @@ Superorganism's slice of the vending standard, by app archetype — the inward, 
 **CapsuleForge** — a credit + a world/history-slice -> a beautiful, collectible generative story/comic, canon-coherent
 - *moat:* a world-canon consistency engine + a collectible-render pipeline · *buyer:* collectors, fans, worldbuilders  ·  *LM* 🧑8 / 🤖2
 
+## Candidates (raw — not yet specced)
+
+- CCGs as vending machines (opening packs)
+- agent podcasts (domain specific high-quality context streams for agents)
+
 *Banked 2026-06-06. Lives in the orchestrator repo so the SO dashboard ingests it.*
