@@ -2,7 +2,7 @@
 
 The pipeline that discovers, scores, and compiles every **individually-campable site in the United States** into a 12-layer land-designation hierarchy, assigns each to its EPA ecoregion (Level III → Level IV), and renders it on the ecoregion explorers. A curated, personally-scored "where can I actually camp" atlas — the data backbone of the **Ecotone** app target.
 
-Lives in `superorganism/dashboard/prototypes/`. **COMPLETE — all 12 layers built nationally: 6,414 campgrounds across 50 states, 623 fives.** Plus a **Vehicle Trails** route overlay — **948 routes** across four tiers (scenic byways, book drives, dirt routes) as road-following lines (§13) — a **Unique Stays** lodging layer — **884 bookable one-of-a-kind places** as points (§14) — and the **human-powered Trails family** — **432 journeys** across hike/bike/paddle (lines) + **160 day-hikes** + **239 standalone trail networks** (activity/hub points) + a zoom-gated Waymarked "every trail" substrate (§15). The atlas resolves into four tiers: **regions · routes · points · environments**.
+Lives in `superorganism/dashboard/prototypes/`. **COMPLETE — all 12 layers built nationally: 6,541 campgrounds across 50 states, 624 fives.** Plus a **Vehicle Trails** route overlay — **948 routes** across four tiers (scenic byways, book drives, dirt routes) as road-following lines (§13) — a **Unique Stays** lodging layer — **884 bookable one-of-a-kind places** as points (§14) — and the **human-powered Trails family** — **432 journeys** across hike/bike/paddle (lines) + **160 day-hikes** + **239 standalone trail networks** (activity/hub points) + a zoom-gated Waymarked "every trail" substrate (§15). The atlas resolves into four tiers: **regions · routes · points · environments**.
 
 ---
 
@@ -143,7 +143,7 @@ The layers are an ownership/designation taxonomy, top-to-bottom by precedence (`
 | 9 | Land Trust | ✅ | 45 / 18 states | thematic default-DENY; islands + West conservancies + East preserves |
 | 10 | Other Parks | ✅ | 159 / 35 states | Curated-marquee county/regional/metro; floor 4 |
 | 11 | Scenic River | ✅ | 100 / 26 states | Private paddle-river outfitter/livery camps (boat lens) |
-| 12 | Lake | ✅ | 287 / 32 states | USACE/TVA/Reclamation reservoir spine; manager-checked |
+| 12 | Lake | ✅ | 410 / 34 states | USACE/TVA/Reclamation reservoir spine; manager-checked; +107 from the national Corps audit |
 
 ### Layer 1 — National Park ✅
 **Granularity: one row per developed campground**, plus one aggregate row per unit for a real dispersed/backcountry/wilderness permit program (e.g. "Yosemite NP - Wilderness (backcountry)"). Yellowstone = ~12 rows; Acadia = 4; a backcountry-only unit = 1.
@@ -249,7 +249,7 @@ Lenses still apply where they fit (Havasupai = a marquee 10-mi hike-in), but cul
 - **Central+West (66):** Penrod's Au Sable (MI), Buffalo Outdoor Center (AR), Turner Bend/Mulberry (AR), American River Resort (CA); rich Texas Hill Country (10) + Missouri Ozarks (11) + Michigan (8).
 - **No code change needed:** distinct private-operator names + the public floats living in higher layers means no false absorption. `layers/scenic_river.json`; honest 2-5.
 
-### Layer 12 — Lake ✅ (287 rows, 32 states — verified)
+### Layer 12 — Lake ✅ (410 rows, 34 states — verified; +107 from the 2026-06-18 national Corps audit)
 **The reservoir-camping spine: dam-operator campgrounds (USACE / TVA / Reclamation / utility), enumerate-and-keep with honest 2s.** The Army Corps is the anchor (all on Recreation.gov). 5 regional agents; the **manager check is load-bearing** — every reservoir has dam-operator campgrounds AND state-park/NF/NPS/county leases on the same water, and only the dam-operator-run ones belong here (the rest are in their own layers).
 - **South-Central (90)** — the Corps heartland (TX/OK/AR/MO/KS): Canyon Lake/Potters Creek (TX), Lake Ouachita/Brady Mountain (AR), Wilson Lake (KS).
 - **Southeast (75)** — 63 USACE + **12 TVA-operated** (overturned the "state-park-only" assumption): Dale Hollow, Norris/Loyston Point, Summersville (WV).
@@ -257,6 +257,8 @@ Lenses still apply where they fit (Havasupai = a marquee 10-mi hike-in), but cul
 - **Midwest (38)** — Corps + Missouri main-stem, tracking the live Corps→state-GFP transfers (Indiana yields zero — all state-leased).
 - **Northeast (11)** — Raystown/Seven Points (PA, the Allegrippis-MTB marquee); New England Corps projects are almost all day-use.
 - Floor honest 2-5 (the cheap Recreation.gov reservoir 2s come in for free, per the owner's call). `lake` added to the `build_layers` load list (it was the residual catch-all before).
+
+**The national Corps audit (2026-06-18) — the GA roadmap exposed a systematic hole.** Harvesting the retired GA camping roadmap surfaced that the Lake layer had missed the metro-Atlanta Corps lakes (Lake Lanier — the busiest Corps lake in the US — and Allatoona) despite being "the reservoir spine." A national re-audit (8 regional agents, positive enumeration from Recreation.gov + the Corps Lakes Gateway, **Corps-OPERATED campgrounds only**) added **+107 USACE campgrounds (282 → 389; lake layer 303 → 410)**, 0 coord-dups. The big finds were whole projects missing: the **entire Tennessee-Tombigbee Waterway** (8 major MS+AL camps), **Lake Pend Oreille / Albeni Falls** (ID), **32 Texas camps** (the atlas had only 1-2 per lake), the **Mississippi River navigation pools** (~10), and Iowa's Coralville/Saylorville/Red Rock/Rathbun. **The calibration that mattered: the "zero-state" alarms (IN/OH/MI/NY) were CORRECT** — those Corps lakes are state-DNR- or conservancy-district-leased (already in the state-park layer), not Corps-operated, so the audit rightly excluded them. The discipline throughout was *operator-verification*: a Corps-owned lake whose campground a state runs belongs in the state-park layer, not here — turning "is the Corps here?" into a string match on the operator, the same move that fixed the Wave-2 trails (§15).
 
 ### The discovery toolkit — seven reusable approaches
 
@@ -274,7 +276,7 @@ The five completed layers produced a toolkit of distinct discovery methods. Each
 
 All seven regional layers are now built nationally (see the per-layer sections above). The doctrine held across every one: map each layer to a toolkit technique, size the agent fan-out to the layer, pin to the floor, verify the manager. Two design questions resolved themselves on contact with the data — the Scenic River "dedup fork" (the famous public floats were already in higher layers, so the layer is private outfitters with no absorption risk) and the Lake "spine" (the manager check, not the count, is the hard part: every reservoir has dam-operator camps tangled with state-park/NF/NPS leases).
 
-**The atlas is complete: all 12 land-designation layers, 6,414 campgrounds, 50 states.** The score floor + `all · 3+ · 4+ · 5+` toggle make it one map you can dial from "every legal spot" down to "the 623 destinations."
+**The atlas is complete: all 12 land-designation layers, 6,541 campgrounds, 50 states.** The score floor + `all · 3+ · 4+ · 5+` toggle make it one map you can dial from "every legal spot" down to "the 623 destinations."
 
 **Separate axis (not in these seven):** the per-spot **modular overlays** — nearby bike trails, paddle/kayak routes, hiking trails, destination restaurants — are enrichment attached to each camp, not designation layers. A distinct track for when the 12-layer hierarchy is filled out.
 
@@ -347,7 +349,7 @@ The journal makes every leg lossless; total spend accumulates but no work repeat
 ## 12. Current standings (last build)
 
 ```
-TOTAL 6,414 campgrounds · 50 states · 623 fives
+TOTAL 6,541 campgrounds · 50 states · 624 fives
 score 5:623  4:2118  3:2655  2:1018
 
 national park   491  (39 states)   ✅
@@ -364,7 +366,7 @@ scenic-river    100  (26 states)   ✅
 lake            287  (32 states)   ✅
 ```
 
-**Status: COMPLETE — all 12 land-designation layers built nationally. 6,414 campgrounds, 50 states, 623 fives.** Runtime-verified: all 6,414 render on `ecoregion-explorer-us.html` across 12 layers, 0 JS errors; ecoregion-assigned except AK/HI (EPA L4 is CONUS-only) and 8 true-offshore islands. **Optional polish only:** a verify-only pass on the 26 author-only NF states (the unverified tail), and the regional layers were curated-marquee/enumerate-and-keep, so deeper county/livery coverage could always be added. Per-layer method in §6, curation doctrine in §5a. See [memory: national-forest camping discovery].
+**Status: COMPLETE — all 12 land-designation layers built nationally. 6,541 campgrounds, 50 states, 624 fives.** Runtime-verified: all 6,541 render on `ecoregion-explorer-us.html` across 12 layers, 0 JS errors; ecoregion-assigned except AK/HI (EPA L4 is CONUS-only) and 8 true-offshore islands. **Optional polish only:** a verify-only pass on the 26 author-only NF states (the unverified tail), and the regional layers were curated-marquee/enumerate-and-keep, so deeper county/livery coverage could always be added. Per-layer method in §6, curation doctrine in §5a. See [memory: national-forest camping discovery].
 
 ---
 
@@ -407,7 +409,7 @@ Each trail *type* is its own sub-layer with its own geometry method — that per
 
 **Dirt Routes (a fourth tier).** The off-pavement sub-modes — **alpine passes, forest-road loops, 4x4/OHV trails, and Backcountry Discovery Routes (BDRs)**. Geometry was the crux a third time: FHWA covers only paved designations and OSRM's driving profile won't route unpaved tracks, so the engine here is **OpenStreetMap via Overpass** (free, ODbL-redistributable — a `User-Agent` header dodges the WAF that 406-blocked the byway attempts). A curated **marquee** enumeration (the universe is unbounded — onX lists 650k+ OHV miles) of ~75 OSM routes is fetched by name within a state bbox; **52 hit cleanly, 23 missed** because BLM "Back Country Byways" are multi-road touring routes, not single named ways (Gold Belt Tour = Shelf Road + Phantom Canyon Road; Alpine Loop = Engineer + Cinnamon + California Gulch; Lolo Motorway = OSM "Lolo Trail" ref FR 500). Agents resolved the misses via OSM aliases / FS-road numbers / component-road names — **13 recovered as exact OSM, 8 as approximate corridors**; the last two recovered in a follow-up — Shafer Trail as exact OSM (the query needed `Shafer|Potash` in a tight Canyonlands bbox), Bannock Pass as an approximate corridor (OSM doesn't name the Continental-Divide crossing). The **25 BDRs** are the legal exception: rideBDR's official GPX is download-free but **redistribution-prohibited**, so (per the user's call) they're **approximate corridors reconstructed from the public route descriptions** — dashed, with a rideBDR link, never the official track. Geometry verified via a 97-cell contact sheet (exact-OSM routes trace the real switchback/canyon roads; corridors are clean). One mis-categorized paved route (Big Sky Byway) dropped. Source frozen in `layers/dirt_routes_meta.json`; pipeline `_build/build_dirt.mjs` (Overpass fetch) → `build_dirt_misses.mjs` (alias re-fetch + corridor fallback) → `build_dirt_final.mjs` (assemble). Rendered **rust-orange by score, default-OFF**, BDRs/fallbacks dashed.
 
-**Standings:** **775 designated byways** (151 federal + 624 state, exact FHWA geometry) **+ 74 Book Drives** (OSRM-routed) **+ 99 Dirt Routes** (OSM/Overpass; 66 exact + 33 approximate corridors) = **948 routes**, all scored & described, rendering alongside the 6,414 camps. Spreads (5/4/3/2) — byways **82/247/305/141**, book **28/27/18/1**, dirt **43/46/10/0**. **The Vehicle Trails layer is COMPLETE across all four planned tiers** (scenic byways · book drives · dirt routes). Future: thread routes to nearby campsites, and the other *trails-by-mode* members (hiking / bike / paddle).
+**Standings:** **775 designated byways** (151 federal + 624 state, exact FHWA geometry) **+ 74 Book Drives** (OSRM-routed) **+ 99 Dirt Routes** (OSM/Overpass; 66 exact + 33 approximate corridors) = **948 routes**, all scored & described, rendering alongside the 6,541 camps. Spreads (5/4/3/2) — byways **82/247/305/141**, book **28/27/18/1**, dirt **43/46/10/0**. **The Vehicle Trails layer is COMPLETE across all four planned tiers** (scenic byways · book drives · dirt routes). Future: thread routes to nearby campsites, and the other *trails-by-mode* members (hiking / bike / paddle).
 
 ---
 
@@ -425,7 +427,7 @@ A third pillar beside camps and routes: **bookable one-of-a-kind places to stay*
 
 **Render:** a single **"Unique Stays"** layer (default-OFF), **diamond markers colored by sub-type** (distinct from the camp circles + route lines), the shared score floor, popups with the why + how-to-book. Source frozen in `layers/unique_stays.json`; per-sub-type provenance in `staging/stays/`.
 
-**Standings:** **884 unique stays** across **21 sub-types**, 50 states — the lodging pillar, alongside **6,414 campgrounds** + **948 vehicle-trail routes**. The atlas now spans **landscape (ecoregions) · how you travel (routes) · where you camp · where you stay**. Future: the see-only "weird America" landmarks were deliberately excluded (stays-only scope) and could become a sibling layer.
+**Standings:** **884 unique stays** across **21 sub-types**, 50 states — the lodging pillar, alongside **6,541 campgrounds** + **948 vehicle-trail routes**. The atlas now spans **landscape (ecoregions) · how you travel (routes) · where you camp · where you stay**. Future: the see-only "weird America" landmarks were deliberately excluded (stays-only scope) and could become a sibling layer.
 
 ---
 
@@ -457,7 +459,7 @@ Consolidation (`_build/_consolidate_types.mjs`): **per-kind priority dedup** so 
 
 **Bike + paddle (the family completed).** The three human-powered modes merge into one **mode-tagged `JOURNEYS` layer** (hike green / bike blue / paddle teal; per-mode toggles). **Biking (119)** — the USBRS numbered routes, Adventure-Cycling tiers + loops, the Rails-to-Trails Hall of Fame, bikepacking canon (TNGA, Western Wildlands), MTB descents (Whole Enchilada, Downieville) and gravel races — reuses the hiking engine across the Waymarked **cycling + MTB** themes (`{theme}.waymarkedtrails.org`), with the same super-relation-by-bbox-span overrides (TransAmerica = cycling/14469882), US-bounds guard (Whole Enchilada name-matched a route in *Spain*), and the new in-state candidate guard. US OSM coverage is thin for the long road tours / numbered USBRs and the localized MTB/gravel routes, so those are authored corridors. **Paddling (109)** — the National Water Trails System, classic whitewater (Grand Canyon, Middle Fork Salmon), and flatwater canon (Boundary Waters, Allagash) — has **no Waymarked theme**, and a river run has no fixed centerline anyway, so every route is an **authored corridor** (rivers traced put-in→take-out following the real bends — agent-authored with verified endpoints; lakes/islands as loop outlines), dashed. The zoom-gated substrate now **stacks the hiking + cycling** Waymarked rasters (foot + bike "every trail").
 
-**Standings:** **432 journeys** across three modes — **204 hiking** (126 exact OSM/cycling geometry + 78 corridors) + **119 biking** (48 OSM + 71 corridors) + **109 paddling** (all corridors) — **+ 160 day-hikes** (37 in-park marquee + 123 standalone) **+ 239 standalone trail networks**, joining 6,414 campgrounds + 948 vehicle routes + 884 stays. All 432 journeys + 123 standalone day-hikes + 239 networks verified centroid-in-declared-state. Committed reproducibility snapshots in `layers/{hike,bike,paddle}_journeys_meta.json` + `layers/{hike,bike,paddle}_corridors.json` (journeys) and `layers/standalone_day_hikes_meta.json` + `layers/networks_meta.json` + `layers/standalone_types_raw.json` (Wave-2, with per-type provenance); the three `build_*_journeys.mjs` read working staging with a committed-layers fallback. The atlas resolves into **four ontological tiers — regions (ecoregions) · routes (drives + journeys, all four modes) · points (camps, stays, day-hikes, network hubs) · environments (the zoom-in substrate)**. The trails-by-mode family (§13 vision) is complete and comprehensive, and the **Wave-2 standalone sweep is DONE — re-discovered by type** (123 day-hikes + 239 networks across 10 sub-layers, headless-verified, dashboard `4eca321`). Next: thread the layers (proximity join routes↔camps↔stays↔activities↔networks into a trip-planner), and the broader "activities" point-layer beyond day-hikes (restaurants, viewpoints, swimming holes).
+**Standings:** **432 journeys** across three modes — **204 hiking** (126 exact OSM/cycling geometry + 78 corridors) + **119 biking** (48 OSM + 71 corridors) + **109 paddling** (all corridors) — **+ 160 day-hikes** (37 in-park marquee + 123 standalone) **+ 239 standalone trail networks**, joining 6,541 campgrounds + 948 vehicle routes + 884 stays. All 432 journeys + 123 standalone day-hikes + 239 networks verified centroid-in-declared-state. Committed reproducibility snapshots in `layers/{hike,bike,paddle}_journeys_meta.json` + `layers/{hike,bike,paddle}_corridors.json` (journeys) and `layers/standalone_day_hikes_meta.json` + `layers/networks_meta.json` + `layers/standalone_types_raw.json` (Wave-2, with per-type provenance); the three `build_*_journeys.mjs` read working staging with a committed-layers fallback. The atlas resolves into **four ontological tiers — regions (ecoregions) · routes (drives + journeys, all four modes) · points (camps, stays, day-hikes, network hubs) · environments (the zoom-in substrate)**. The trails-by-mode family (§13 vision) is complete and comprehensive, and the **Wave-2 standalone sweep is DONE — re-discovered by type** (123 day-hikes + 239 networks across 10 sub-layers, headless-verified, dashboard `4eca321`). Next: thread the layers (proximity join routes↔camps↔stays↔activities↔networks into a trip-planner), and the broader "activities" point-layer beyond day-hikes (restaurants, viewpoints, swimming holes).
 
 ---
 
@@ -532,3 +534,12 @@ The one scannable place: for **every** layer and sub-layer, the **authoritative 
 | Networks · city open-space systems (43) | city-owned open-space divisions/preserves (Boulder OSMP, Portland Forest Park, McDowell Sonoran, Mission Trails) | hub point |
 | Networks · park/open-space special districts (129) | the special-district government roster (Forest Preserve District of X / X Metroparks / X Open Space District) — enumerate-comprehensively, publish-by-floor | hub point |
 | Substrate (every-trail) | Waymarked Trails raster tiles (OSM / ODbL), zoom-gated z≥12 | tile |
+
+---
+
+## 17. Next / soon
+
+- The activities-layer expansion you described (restaurants, escape rooms, festivals, sporting events, Atlas Obscura, World Heritage / historical sites) — same positive-enumeration-by-type approach we just nailed.
+- Thread the layers — proximity-join routes↔camps↔stays↔day-hikes↔networks into a trip-planner (select a camp → what's near it). The standing unlock; no new data collection needed.
+
+*Recently done:* the national Corps-campground audit (+107 USACE, §6 Layer 12) and the Wave-2 standalone trails re-discovered by type (123 day-hikes + 239 networks across 10 sub-layers, §15).
