@@ -578,13 +578,20 @@ Scores 2-5 (★5×46 · ★4×116 · ★3×56 · ★2×14); default floor ★3 s
 
 **Pipeline (idempotent, regenerable):** `_consolidate_activities_national.mjs` (22 `/tmp` agent outputs → `layers/activities_national_meta.json`; 5-entry name-artifact fix + national-internal dedup) → `build_activities.mjs` (concat all `layers/activities_*_meta.json` → `data/us/activities.json` with cross-file dedup + 51-state in-state guard; GA-only run reproduces 232 byte-identical). Committed rosters = `activities_ga_meta.json` + `activities_national_meta.json`; served file gitignored. Headless `verify_activities.mjs` **16/16** national-scale checks (2,232 load, all coords in declared state, 51-state coverage, 6 families, every subtype labeled, Do-panel grouping, select→fly, R1 keystone, floor-gated toggle). Dashboard commit `4d7dd0b` (local).
 
-*Status: **DONE — Georgia (232) + national (2,001) = 2,232 things-to-do, all 51 states+DC.** The activities pillar is complete; next leverage is threading the layers (§18).*
+**Coverage audit + gap-fill — every state 80/20'd (2,232 → 2,805):** a state×family matrix on the 2,232 set exposed the predictable shape of a regional fan-out — the *prominent* state in each region got rich coverage while *secondary* states were shortchanged: ND had 5 entries; CT/MS/LA/IL/DC had **0 outdoor**; NH/SD/ND had **0 eat-drink**; KY had **1 outdoor** (no Red River Gorge). Two gap-fill passes, same positive-enumeration discipline, each agent handed the state's existing entries to return only NET-NEW:
+
+- **Pass 1 — 24 under-covered states** (~22 each = 503): filled the empty/thin universal families; play left honestly empty where a state has no destination-grade park.
+- **Pass 2 — 7 thin universal cells the first cut missed** (= 70): AL/OH/SC outdoor (Cheaha, Hocking Hills, Table Rock/Congaree), MN/HI/UT/CT events (Winter Carnival, Merrie Monarch + Ironman, Bonneville Speed Week).
+
+**Result: min-state 5 (ND) → 27 (IN); median 42; zero thin universal cells remain** — every state ≥3 in each of eat-drink/see-learn/heritage/events/outdoor. 573 net-new at **dedup −0** (the "avoid the already-have list" instruction held perfectly). Agents kept the discipline — dropped defunct (Norsk Hostfest, Basilica Block Party, Kingda Ka, Lynn's Paradise, Rock of Ages tours), caught cross-border traps (Salmon Glacier=BC, The Awakening relocated to MD, Montshire=VT-not-NH), corrected coords (Nez Perce, Effigy Mounds). Per-family: eat-drink 565 · outdoor 588 · see-learn 511 · heritage 499 · events 383 · play 259. Committed roster `layers/activities_gapfill_meta.json`; `verify_activities.mjs` 16/16 at 2,805. Dashboard commit `f126674` (local).
+
+*Status: **DONE — 2,805 things-to-do, all 51 states+DC, every state 80/20'd across the universal sub-layers** (GA 232 + national 2,001 + gap-fill 573 − dedup/guard). The activities pillar is complete; next leverage is threading the layers (§18).*
 
 ---
 
 ## 18. Next / soon
 
 - **Thread the layers** — proximity-join routes↔camps↔stays↔day-hikes↔networks↔activities into a trip-planner (select a camp → what's near it: which things-to-do, trailheads, stays within N miles). The standing unlock; no new data collection needed — all six point/line layers now exist nationally. **This is the active next step.**
-- **Activities polish** (later) — the "Do" panel currently lists all 2,210 floored entries; gate it to the current map viewport (only show activities in view) once density makes the national list unwieldy. Optional per-subtype legend filter. Marker clustering at low zoom if 2,232 stars strain render.
+- **Activities polish** (later) — the "Do" panel lists all ~2,783 floored entries; gate it to the current map viewport once density makes the national list unwieldy. Optional per-subtype legend filter. Marker clustering at low zoom if 2,805 stars strain render.
 
-*Recently done:* the **national Activities layer** (2,232 things-to-do across all 51 states+DC via 10 national-roster + 12 regional agents, §17), the GA activities worked-template that seeded it (232, §17), the national Corps-campground audit (+107 USACE, §6 Layer 12), and the Wave-2 standalone trails re-discovered by type (123 day-hikes + 239 networks, §15).
+*Recently done:* the **national Activities layer, audited to an even 80/20** (2,805 things-to-do across all 51 states+DC — 10 national-roster + 12 regional agents, then a state×family coverage audit + 31 gap-fill agents bringing every state to ≥3 in each universal sub-layer, §17), the national Corps-campground audit (+107 USACE, §6 Layer 12), and the Wave-2 standalone trails re-discovered by type (123 day-hikes + 239 networks, §15).
