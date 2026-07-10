@@ -6,8 +6,14 @@
 > property of a SURFACE inside a Studio/Game, not its own type." Autonomy/inhabitedness is an
 > AXIS any app can carry, not a value-discipline — the app-grid analysis had already found it ("only the
 > autonomy axis transfers"). The former Sandbox value-forms (liveness, accreted history, emergent order &
-> society, commons) are the AUTONOMY LAYER's forms, attaching to autonomous Consoles/Studios/Games. The
-> agent-native layer (Oracle · Grounding Packs · Experience) is unchanged. Domains are FIVE — ServiceGrid ·
+> society, commons) are the AUTONOMY LAYER's forms, attaching to autonomous Consoles/Studios/Games.
+> **Extension (RULED 2026-07-10, owner): the agent-native FAMILY dissolves the same way — the
+> buyer/pilot is an AXIS, not a category** ("you can parallel all of the same archetypes and
+> sub-categories with agent-piloted versions without needing a special category"; the catalog's own
+> 🧑/🤖 channel tag was already this axis). The three named forms re-tag: **Oracle → agent-piloted
+> Console** (Score's twin) · **Grounding Packs → agent-piloted Studio** (Bespoke's twin — the record
+> had flagged "Grounding≈Bespoke, Experience≈Game" as the dual-buyer seam) · **Experience →
+> agent-piloted Game**. Domains are FIVE — ServiceGrid ·
 > Superorganism · Dreamtime · Pilgrimage · **Navigator**. The body below predates the ruling: read
 > Sandbox-tagged entries as autonomous apps of the three; per-entry reclassification lands on this doc's
 > next real touch. (Original ruling 2026-06-19; re-affirmed + propagated 2026-07-10.)
