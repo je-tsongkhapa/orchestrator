@@ -94,6 +94,9 @@ The operating principles that surface through building and running the system. N
 
 - **"One of the best secret exits is making the environment smaller"** — when facing complexity, reduce the environment before expanding the search. The first response to a stuck state at any layer is shrinking the space, not gathering more information or adding more capability. This disposition surfaces independently across every phase: Observe (progressive disclosure, large state → disk + summary, U-shaped attention), Orient (R→D→S (requirements→delete→simplify), policy entropy reduction), Decide (alpha-beta pruning, bounded planning horizon, D-tier atomic unit), Act (minimal context injection, tool whitelisting, sandbox isolation, depth constraint), Memory (compaction, trajectory engineering, branch trimming), Library (lean by default, skill scoping per loop). Distinct from lean by default — lean is design-time restraint (don't add); this is runtime escape (actively remove). Reduction is the cheapest intervention that changes the problem space; expansion is the most expensive.
 
+**Candidate (unprocessed):**
+- "The single most powerful pattern I have noticed is that successful people find value in unexpected places and they do this by thinking about business from first principles"
+
 ---
 
 ## Modification Semantics

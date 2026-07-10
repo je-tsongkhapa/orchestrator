@@ -1,4 +1,4 @@
-# REFERENCE — App Grid (4 domains × 4 archetypes)
+# REFERENCE — App Grid (5 domains × 3 archetypes — THE GRID v2 below; the 4×4 body is historical evidence)
 
 > **RULED 2026-06-19 (owner, surfaced while structuring Theatron; recorded in session memory but never propagated to docs — propagated 2026-07-10): THREE app archetypes — Console · Studio · Game; the Sandbox archetype is DISSOLVED.**
 > "There is no such thing as a sandbox that's not a console, studio, or game" — the original record: "it so
@@ -20,6 +20,9 @@
 >
 > For this doc specifically: RE-DERIVED below (2026-07-10) at 5 domains × 3 archetypes — see THE GRID
 > v2. The original 4×4 body is kept beneath it as evidence (its forced-cell law presaged the ruling).
+> ALSO stale in the historical body (sweep-flagged 2026-07-10): SO Exploration's Survey/Experience
+> layer is RETIRED — /exploration is Atlas tier-lists (+ Culture/Artifacts/Terrain); read those
+> mentions as history.
 
 
 

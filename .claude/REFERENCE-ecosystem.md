@@ -1,5 +1,12 @@
 # Ecosystem — Four-Component Composition
 
+> **STALE — sweep-flagged 2026-07-10 (see `workspaces/REFERENCE-ontology.md`): domains are FIVE**
+> (ServiceGrid · Superorganism · Dreamtime · Pilgrimage · **Navigator**) — the four-component
+> composition below predates Navigator's elevation to a peer domain. OPEN (owner call): whether
+> Navigator enters as a fifth exported-capability COMPONENT or as the composing SUBSTRATE (the
+> deprecated orchestrator's successor). Archetypes are THREE × axes (same ontology doc).
+
+
 > Source: derived 2026-05-15 in a strategy conversation that began with "a good org mission for ServiceGrid" and recursed to the ecosystem level. A domain's mission is the reusable component-capability it exports to the level above; the ecosystem is the composition of all four.
 > Revisit when: defining or scoping any of the four domains (SG / SO / DT / PG); evaluating whether a domain's work advances its exported component; reasoning about what the orchestrator substrate is for.
 
