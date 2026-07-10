@@ -22,7 +22,7 @@
 > products pending per-machine reclassification.
 
 
-Superorganism's slice of the vending standard, by app archetype — the inward, self-facing machines. Framework = 4 archetypes (Console · Studio · Game · Sandbox) + an agent-native layer (ServiceGrid side). ServiceGrid's machines: `REFERENCE-vending-machines.md`.
+Superorganism's slice of the vending standard, by app archetype — the inward, self-facing machines. Framework = **3 archetypes** (Console · Studio · Game) **× axes** (autonomy · pilot 🧑/🤖 · domain — see the banner above). ServiceGrid's machines: `REFERENCE-vending-machines.md`.
 
 ## The standard — 8 traits
 
@@ -91,27 +91,27 @@ Superorganism's slice of the vending standard, by app archetype — the inward, 
 **Lockbox** — a credit + a setup (+ optional your material) -> a fair self-contained solvable you crack
 - *moat:* a solvable-generation + fairness engine (proves a unique solution) · *buyer:* players wanting a fair designed brain-teaser  ·  *LM* 🧑7 / 🤖3
 
-## Sandbox (7)
+## Ex-Sandbox — RE-TAGGED 2026-07-10 (5 autonomous Studio · 2 autonomous Console; all presuppose a running/matured world as substrate — the autonomy axis)
 
-**TimeWarpKiln** — a credit + a seed/design -> max harvestable stock after N weeks of compressed world-time, or a design-verdict
+**TimeWarpKiln** *(→ autonomous Studio: create — a matured artifact/verdict from a seed)* — a credit + a seed/design -> max harvestable stock after N weeks of compressed world-time, or a design-verdict
 - *moat:* a time-warp speed governor with determinism-equivalence · *buyer:* worldbuilders maturing a seed; anyone testing a design  ·  *LM* 🧑6 / 🤖6
 
-**LegendsForge** — a credit + a founding seed + a run length -> a readable saga of a once-only history
+**LegendsForge** *(→ autonomous Studio: create — a collectible saga)* — a credit + a founding seed + a run length -> a readable saga of a once-only history
 - *moat:* append-only causal sediment + seeded-RNG · *buyer:* GMs, fiction/lore writers  ·  *LM* 🧑7 / 🤖2
 
-**RuinsCartographer** — a credit + a world-state/seed -> a replayable chronicle of how the present came to be
+**RuinsCartographer** *(→ autonomous Studio: create — a chronicle document)* — a credit + a world-state/seed -> a replayable chronicle of how the present came to be
 - *moat:* deterministic replay + an intervention-provenance ledger · *buyer:* studios/researchers/GMs documenting a world's origin  ·  *LM* 🧑6 / 🤖4
 
-**SocietyFork** — a credit + a society -> fork it (keep one to inhabit / compare N)
+**SocietyFork** *(→ autonomous Console: manage — fork, steward, compare societies)* — a credit + a society -> fork it (keep one to inhabit / compare N)
 - *moat:* society-state capture + fork semantics + a divergence layer · *buyer:* strategists comparing outcomes; anyone wanting their own society  ·  *LM* 🧑7 / 🤖4
 
-**VivariumNudge** — a credit + an intervention -> injected into a running vivarium, propagated to a world-scale consequence
+**VivariumNudge** *(→ autonomous Console: manage — a steward's intervention in a running world)* — a credit + an intervention -> injected into a running vivarium, propagated to a world-scale consequence
 - *moat:* a live-intervention engine + autonomous amplification · *buyer:* people running/watching a persistent agent world  ·  *LM* 🧑7 / 🤖2
 
-**AgentDraft** — a credit (per agent) -> a specific agent instantiated into your world as a persistent inhabitant
+**AgentDraft** *(→ autonomous Studio: create — a collectible persistent inhabitant)* — a credit (per agent) -> a specific agent instantiated into your world as a persistent inhabitant
 - *moat:* an agent catalog + persistent-identity transfer · *buyer:* people populating their own society; collectible-agent buyers  ·  *LM* 🧑7 / 🤖2
 
-**CapsuleForge** — a credit + a world/history-slice -> a beautiful, collectible generative story/comic, canon-coherent
+**CapsuleForge** *(→ Studio: create — a canon-coherent collectible; the autonomous WORLD is the input, not the machine)* — a credit + a world/history-slice -> a beautiful, collectible generative story/comic, canon-coherent
 - *moat:* a world-canon consistency engine + a collectible-render pipeline · *buyer:* collectors, fans, worldbuilders  ·  *LM* 🧑8 / 🤖2
 
 ## Candidates (raw — not yet specced)

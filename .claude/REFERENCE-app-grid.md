@@ -18,10 +18,69 @@
 > Sandbox-tagged entries as autonomous apps of the three; per-entry reclassification lands on this doc's
 > next real touch. (Original ruling 2026-06-19; re-affirmed + propagated 2026-07-10.)
 >
-> For this doc specifically: the grid needs RE-DERIVATION at 5 domains × 3 archetypes (Navigator is
-> missing below; the Sandbox column dissolves). The analysis stays valuable as evidence — its forced-cell
-> law is what presaged this ruling.
+> For this doc specifically: RE-DERIVED below (2026-07-10) at 5 domains × 3 archetypes — see THE GRID
+> v2. The original 4×4 body is kept beneath it as evidence (its forced-cell law presaged the ruling).
 
+
+
+## THE GRID v2 — 5 domains × 3 archetypes (re-derived 2026-07-10)
+
+Under the ruled ontology (3 value-verbs × the autonomy/pilot axes; 5 domains), the grid
+re-derives as 15 cells. ⚡ marks a cell whose natural form is AUTONOMOUS (the dissolved
+Sandbox column redistributed as the axis it always was).
+
+| Domain | Console *(manage)* | Studio *(create)* | Game *(play)* |
+|---|---|---|---|
+| **ServiceGrid** | ✅ *DispatchDeck* 🟢 home | ◐ EstimateStudio 🟢 | ServiceSim 🟡 |
+| **Superorganism** | ✅ *SO dashboard* 🟢 home | ◐ LifeForge 🟡 | ◐ Arena of the Self 🟡 |
+| **Dreamtime** | ◐ ⚡ *the theatron surfaces + Roost* 🟢 home | ⚡ Genesis Bench (world-seed authoring) 🟡 | ◐ ⚡ *the theatron CAMPAIGN itself* 🟢 (agent-piloted) |
+| **Pilgrimage** | ✅ Cartographer's Atlas 🟡 | ◐ Worldwright 🟡 | *Pilgrim* 🟢 home · ⚡ Vivarium = the inhabited variant |
+| **Navigator** *(new row)* | ◐ ⚡ *the nav console/TUI* 🟢 home (built read-only; the write side is the cockpit pattern) | the loopcraft/TaskSpec bench 🟡 (the old knobbleton-repo product RE-HOMES here — it was always Navigator's Studio cell) | the exam shape 🟡 (Ecotone-class: one scored run to a real ending — evals-as-games) |
+
+**What the re-derivation changes (the five load-bearing reads):**
+
+1. **Dreamtime's home resolves.** The old grid homed Dreamtime at Sandbox (The Hollow,
+   "0%-built, most expensive cell"). Re-read: **theatron IS that engine and it is
+   partially LIVE** — sovereign tick = the daemon · commons = the treasury · chronicle =
+   the corpus · containment = wallet-halt + the kill ladder · catch-up digest = the
+   retention brief. Its manage-face (surfaces + Roost) is the autonomous-Console home;
+   its play-face (missioned worlds running to graduation) is an autonomous, agent-piloted
+   Game. The old "biggest build-multiplier" (Hollow≡Vivarium, one engine two homes)
+   SURVIVES: theatron's engine is that build, already compounding.
+2. **The old forced cells translate, they don't vanish.** SG×Sandbox and SO×Sandbox
+   ("degrades to OvernightGuild") become a PRODUCT truth on the autonomy axis: an
+   autonomous Console over a commerce domain = an agent crew — and the vending re-tag
+   confirmed it (OvernightGuild is now literally tagged autonomous Console, 🧑9/🤖9, the
+   strongest bridge machine in the catalog). The forced-cell law's residue is a hit, not
+   a hole.
+3. **Dreamtime×Game un-forces.** "Wager Before Dawn" was forced because it assumed a
+   HUMAN player in an absence-premised domain. The pilot axis dissolves the paradox: the
+   campaign is a real Game whose players are AGENTS (worlds playing to graduation); the
+   human is the catalyst/configurator (the two-touch contract), and spectating-with-
+   stakes remains the thin human-side residue it always was.
+4. **Studio stays connective tissue — now with receipts.** Still no domain homes at
+   Studio, yet Studio dominates the SO VENDING catalog (11 + 5 re-tagged = 16 of 26):
+   instrumental-never-destination is confirmed at both the app layer (no home) and the
+   machine layer (the most vendable family). The one terminal-valued Studio app remains
+   EstimateStudio.
+5. **Navigator's row was hiding in plain sight.** Its Console home is F8 (built,
+   read-only — the "control-room for an autonomous domain" pattern the old grid named as
+   Roost); its Studio cell is where the ORIGINAL knobbleton-repo product (the loopcraft
+   studio / "Ableton for agents") re-homes — that plan was never a Theatron config
+   console, it was Navigator's Studio; its Game cell is the exam shape (a scored one-shot
+   run to a real curtain), which also gives the harvest's games-as-gauntlet row its app
+   home when that program un-parks.
+
+**Top opportunities, re-ranked:** Roost / the theatron write-side console (Dreamtime
+Console — half-built, highest leverage, and §G3 knobbleton is its first slice) ·
+EstimateStudio (unchanged — the one Studio a customer pays for directly) · Pilgrim
+(unchanged — the cleanest archetype↔domain match) · the Navigator Studio bench (the
+re-homed loopcraft studio — build AFTER Navigator's write-side Console exists) ·
+ServiceSim (unchanged, honest discount).
+
+---
+
+## Historical: the original 4×4 derivation (superseded, kept as evidence)
 
 This reference maps a 4×4 grid: four domains (ServiceGrid, the field-service-management business; Superorganism, the user's life-as-org; Dreamtime, the autonomous-agent orchestrator; Pilgrimage, games + worldbuilding) crossed with the four app archetypes cut by core-loop autonomy × value-discipline (Console = inert/manage, Studio = inert/create, Game = running/play, Sandbox = autonomous/inhabit). The DIAGONAL is each domain's home archetype — where the domain's center of gravity already sits and where an app is most natural and most often already built: ServiceGrid→Console (DispatchDeck; the flagship FSM SaaS), Superorganism→Console (the shipped SO life-dashboard), Dreamtime→Sandbox (The Hollow; a self-organizing agent world), and Pilgrimage→two homes, Game (Pilgrim) AND Sandbox (Vivarium), since a pilgrimage is both a played journey and an inhabited world. The OFF-DIAGONAL is the backlog: it's where you ask whether crossing a domain into a non-home archetype yields a genuinely NEW app or just a re-skin of the home one, and it's where forced symmetry hides. The grid's single sharpest structural finding is that Studio is the universal white-space: it is NOT a home archetype in ANY of the four domains (two are Console-homes, two are running-homes), so the entire Studio COLUMN is off-diagonal — and every Studio cell collapses to the same shape, an authoring instrument for one homogeneous artifact whose value is INSTRUMENTAL to a home cell (make the quote the FSM Console sends, the life-model the SO Console manages, the world-seed the Dreamtime Sandbox runs, the world-bible the Pilgrimage Game/Sandbox play). Studio is the grid's connective tissue, not a destination — the on-ramp that feeds the homes.
 
