@@ -1,5 +1,21 @@
 # REFERENCE — AI Vending Machines (Superorganism)
 
+> **RULED 2026-06-19 (owner, surfaced while structuring Theatron; recorded in session memory but never propagated to docs — propagated 2026-07-10): THREE app archetypes — Console · Studio · Game; the Sandbox archetype is DISSOLVED.**
+> "There is no such thing as a sandbox that's not a console, studio, or game" — the original record: "it so
+> commonly folds into the other three that it's not a top-level archetype; a sandbox-y agent-society is a
+> property of a SURFACE inside a Studio/Game, not its own type." Autonomy/inhabitedness is an
+> AXIS any app can carry, not a value-discipline — the app-grid analysis had already found it ("only the
+> autonomy axis transfers"). The former Sandbox value-forms (liveness, accreted history, emergent order &
+> society, commons) are the AUTONOMY LAYER's forms, attaching to autonomous Consoles/Studios/Games. The
+> agent-native layer (Oracle · Grounding Packs · Experience) is unchanged. Domains are FIVE — ServiceGrid ·
+> Superorganism · Dreamtime · Pilgrimage · **Navigator**. The body below predates the ruling: read
+> Sandbox-tagged entries as autonomous apps of the three; per-entry reclassification lands on this doc's
+> next real touch. (Original ruling 2026-06-19; re-affirmed + propagated 2026-07-10.)
+>
+> For this doc specifically: the 7 Sandbox-tagged machines read as autonomous Console/Studio/Game
+> products pending per-machine reclassification.
+
+
 Superorganism's slice of the vending standard, by app archetype — the inward, self-facing machines. Framework = 4 archetypes (Console · Studio · Game · Sandbox) + an agent-native layer (ServiceGrid side). ServiceGrid's machines: `REFERENCE-vending-machines.md`.
 
 ## The standard — 8 traits
